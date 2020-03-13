@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<items>
+	<item>/regist.jsp</item>
+	<item>/regist.do</item>
+	<item>/index.jsp</item>
+	<item>/login.do</item>
+	<item>/</item>
+	<item>/ImageJsp.jsp</item>
+	<item>/ImageJsp2.jsp</item>
+	<item>/showAllMoods.jsp</item>
+	<item>/showMoodInfo.jsp</item>
+	<item>/login.jsp</item>
+	<item>/home.jsp</item>
+	<!-- 显示全部心情， -->
+	<!-- 显示某个心情的评论 -->
+</items>

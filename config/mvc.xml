@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mvc>
+<!-- package 代表使用xml文件进行分包， name唯一，namespace 代表包的路径，如果斜杠，代表在根目录下 ，一个mvc 有多个 package-->
+	<package name="user" namespace="/" >
+		<!-- action 动作，这里 name action中唯一的名字（这个名字来自于applicationContext.xml中的Bean的id），
+		method 要调用的方法 ,class="对应的类名",如果 不写默认是执行execute方法，一个package有多个action -->
+		<action name="login" method="login" class="userAction">
+			<!-- Result 处理后的结果显示name名字唯一 type=以什么样方式跳转（dispatcher 请求转发，redirect 重定向，stream 输出流，直接输出内容）
+					 标签与标签之间，可以是jsp文件，也可以是字符串，也可以是script代码  ，一个action中有多个Result-->
+			<result name="success" type="dispatcher">/jsp_day20/success.jsp</result>
+			<result name="fail" type="redirect">/jsp_day20/fail.jsp</result>
+		</action>
+		<action name="regist" method="regist" class="userAction">
+			<result name="success" type="stream">注册成功</result>
+			<result name="fail" type="redirect">/jsp_day20/fail.jsp</result>
+		</action>
+		<action name="showallMoods" method="showallMoods" class="moodAction">
+			<result name="success" type="redirect">/jsp_day20/showAllMoods.jsp</result>
+			<result name="fail" type="redirect">/jsp_day20/fail.jsp</result>
+		</action>
+		<action name="LoginOut" method="LoginOut" class="userAction">
+			<result name="success" type="redirect">/jsp_day20/login.jsp</result>
+			<result name="fail" type="redirect">/jsp_day20/fail.jsp</result>
+		</action>
+		<action name="Mood_doRegist" method="Mood_doRegist" class="moodAction">
+			<result name="success" type="redirect">/jsp_day20/Mood_doRegist.jsp</result>
+			<result name="fail" type="redirect">/jsp_day20/fail.jsp</result>
+		</action>
+
+	</package>
+</mvc>
