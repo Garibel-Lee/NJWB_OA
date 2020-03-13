@@ -15,7 +15,6 @@ import java.time.LocalDate;
 @Data
 public class User{
 
-
     private Integer id;
 
     private String userAccount;
@@ -27,6 +26,5 @@ public class User{
     private Integer roleId;
 
     private LocalDate createTime;
-
 
 }

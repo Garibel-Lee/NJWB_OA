@@ -12,12 +12,12 @@ import java.io.UnsupportedEncodingException;
 //过滤器就是一个servlet，只不过，它会被服务器在执行相应的请求前调用
 public class CharacterFilter implements Filter {
 	private static Logger logger = Logger.getLogger(CharacterFilter.class);
-	
+
 	public void destroy() {
 		// 销毁方法
 		logger.debug("CharacterFilter.class调用销毁方法");
 		//System.out.println("CharacterFilter.class调用销毁方法");
-	}	
+	}
 	/**
 	 * req request对象
 	 * res response对象
@@ -31,18 +31,23 @@ public class CharacterFilter implements Filter {
 		//为什么要强转，方法更多，功能更多
 		HttpServletRequest request = (HttpServletRequest)req;
 		HttpServletResponse response = (HttpServletResponse)res;
+		//设置字符集
+		request.setCharacterEncoding("utf-8");
+		response.setCharacterEncoding("utf-8");
+		response.setContentType("text/html;charset=utf8");
 		//判断是get请求还是Post请求
 		if("get".equalsIgnoreCase(request.getMethod())){
 			//request.getMethod() //获得请求方式
-			request = new MyRequest(request);//创建自己的对象
+			MyRequest request1 = new MyRequest(request);//创建自己的对象,为什么又不需要进行get字符集的转换
+			logger.info("get方式提交，好像没有什么用处");
+			System.out.println("get方式提交");
+			//如何通过过滤器
+			chain.doFilter(request, response);
 		}if("post".equalsIgnoreCase(request.getMethod())){
-			//设置字符集
-			request.setCharacterEncoding("utf-8");
-			response.setCharacterEncoding("utf-8");
-			response.setContentType("text/html;charset=utf8");
+			//如何通过过滤器
+			chain.doFilter(request, response);
 		}
-		//如何通过过滤器
-		chain.doFilter(request, response);
+
 	}
 	private String from = null;// 原始字符集
 	private String to = null; //新的字符集
@@ -71,6 +76,7 @@ public class CharacterFilter implements Filter {
 				try {
 					//实现的转码
 					result = new String(other.getBytes(from),to);
+					logger2.warn("转换成功:"+result);
 				} catch (UnsupportedEncodingException e) {
 					logger2.warn("MyRequest.class的getParameter方法的字符转换异常");
 					e.printStackTrace();
@@ -95,7 +101,6 @@ public class CharacterFilter implements Filter {
 			}
 			return values ;
 		}
-		
+
 	}
-	
 }

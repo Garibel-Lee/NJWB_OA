@@ -5,6 +5,7 @@
 	<item>/index.jsp</item>
 	<item>/login.do</item>
 	<item>/</item>
+	<item>/ajaxloginName.do</item>
 	<item>/ImageJsp.jsp</item>
 	<item>/ImageJsp2.jsp</item>
 	<item>/showAllMoods.jsp</item>
