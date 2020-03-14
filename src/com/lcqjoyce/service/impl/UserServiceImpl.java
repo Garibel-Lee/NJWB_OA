@@ -12,8 +12,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     //使用log4j的日志记录信息（需要有一个配置文件，确定日志记录的等级，debug，info，warn，error）
     private static Logger logger = Logger.getLogger(UserServiceImpl.class);
-    private UserDao userDao = null;
-    private Transaction transaction = null;
+    private UserDao userDao ;
+    private Transaction transaction ;
 
     public int insert(User user) {
         //开始事务

@@ -1,8 +1,8 @@
 package com.test;
 
+import com.lcqjoyce.My_JDBC.Init.BeanFactory;
 import com.lcqjoyce.entity.Menu;
 import com.lcqjoyce.service.PermissionsService;
-import com.lcqjoyce.service.impl.PermissionsServiceImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class Test001 {
 
         System.out.println(PermissionsDao.ListAll(1).toString());*/
         /**/
-        PermissionsService PermissionsService=new PermissionsServiceImpl();
+        PermissionsService PermissionsService=(PermissionsService) BeanFactory.getObject("permissionsService");
         Map<Menu, List<Menu>>  re= PermissionsService.listAll(3);
         System.out.println(re.toString());
 

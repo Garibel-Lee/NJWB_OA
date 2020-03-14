@@ -3,8 +3,7 @@
 	<bean id="userDao" class="com.lcqjoyce.dao.impl.UserDaoImpl" />
 	<bean id="permissionsDao" class="com.lcqjoyce.dao.impl.PermissionsDaoImpl" />
 	<bean id="menuDao" class="com.lcqjoyce.dao.impl.MenuDaoImpl" />
-
-
+	<bean id="tran" class="com.lcqjoyce.My_JDBC.Transaction.impl.TransactionImpl" />
 
 	<bean id="userService" class="com.lcqjoyce.service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDao"/>

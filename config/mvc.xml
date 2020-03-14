@@ -8,7 +8,7 @@
             <!-- Result 处理后的结果显示name名字唯一 type=以什么样方式跳转（dispatcher 请求转发，redirect 重定向，stream 输出流，直接输出内容）
                      标签与标签之间，可以是jsp文件，也可以是字符串，也可以是script代码  ，一个action中有多个Result-->
             <result name="success" type="dispatcher">/njwb/main.jsp</result>
-            <result name="fail" type="redirect">/WEB-INF/njwb/main.jsp</result>
+            <result name="fail" type="redirect">/njwb/main.jsp</result>
         </action>
         <action name="regist" method="regist" class="userAction">
             <result name="success" type="stream">注册成功</result>

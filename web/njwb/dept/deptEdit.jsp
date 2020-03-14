@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <html>
   <head>
     <title>部门编辑</title>
@@ -71,9 +72,9 @@
    		
    		<tr>
    			<td colspan="2">
-   				<input type = "submit" value="添加"/>
+   				<input type = "submit" value="修改"/>
    				<input type = "reset" value="重置"/>
-				<a href="dept.html" target="contentPage"><input type="button" value="返回"></a>
+				<a href="dept.jsp" target="contentPage"><input type="button" value="返回"></a>
    			</td>
    		</tr>  	
    	</table>

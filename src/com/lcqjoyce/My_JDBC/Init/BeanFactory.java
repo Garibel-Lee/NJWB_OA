@@ -34,7 +34,6 @@ public class BeanFactory {
 			if(null!= elements && elements.size()>0){
 				for (int i = 0; i <elements.size(); i++) {
 					Element element = elements.get(i);
-					logger.debug(element.getText());
 					//获得Id
 					Attribute id = element.attribute("id");
 					//获得class
@@ -59,7 +58,6 @@ public class BeanFactory {
 							//获得name与ref
 							Attribute name = property.attribute("name");
 							Attribute ref = property.attribute("ref");
-							logger.debug(name+"\n"+ref);
 							//通过name找对应的set方法，通过ref获得已经存在的bean
 							if(null==name || null==ref){
 								logger.warn("bean中第"+i+"个标签中的第"+j+"个property不存在name或ref属性");

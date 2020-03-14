@@ -1,4 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <html>
   <head>
     <title>部门管理</title>
@@ -33,7 +34,7 @@
          	<h1 class="title">首页  &gt;&gt;部门管理 </h1>
          	
          	<div class="add">
-         		<a href="deptAdd.html" target="contentPage"><img alt="" src="../../img/add.png" width="18px" height="18px">添加部门</a>
+         		<a href="deptAdd.jsp" target="contentPage"><img alt="" src="../../img/add.png" width="18px" height="18px">添加部门</a>
          	</div>
          	
          	<table class="deptInfo">
@@ -51,8 +52,8 @@
          			<td>李雷</td>
          			<td>
          				<img alt="" src="../../img/delete.png" class="operateImg" onclick="del()">
-         				<a href="deptEdit.html" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg" ></a>
-         				<a href="deptDetail.html" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
+         				<a href="deptEdit.jsp" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg" ></a>
+         				<a href="deptDetail.jsp" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
          			</td>
          		</tr>
           		<tr>
@@ -62,8 +63,8 @@
          			<td>韩梅梅</td>
          			<td>
          				<img alt="" src="../../img/delete.png" class="operateImg">
-         				<a href="deptEdit.html" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg"></a>
-         				<a href="deptDetail.html" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
+         				<a href="deptEdit.jsp" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg"></a>
+         				<a href="deptDetail.jsp" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
          			</td>         			
          		</tr>  
           		<tr>
@@ -73,8 +74,8 @@
          			<td>张三丰</td>
          			<td>
          				<img alt="" src="../../img/delete.png" class="operateImg">
-         				<a href="deptEdit.html" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg"></a>
-         				<a href="deptDetail.html" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
+         				<a href="deptEdit.jsp" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg"></a>
+         				<a href="deptDetail.jsp" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
          			</td>         			
          		</tr>  
           		<tr>
@@ -84,8 +85,8 @@
          			<td>李莫愁</td>
          			<td>
          				<img alt="" src="../../img/delete.png" class="operateImg">
-         				<a href="deptEdit.html" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg"></a>
-         				<a href="deptDetail.html" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
+         				<a href="deptEdit.jsp" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg"></a>
+         				<a href="deptDetail.jsp" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
          			</td>         			
          		</tr> 
           		<tr>
@@ -95,8 +96,8 @@
          			<td>白字画</td>
          			<td>
          				<img alt="" src="../../img/delete.png" class="operateImg">
-         				<a href="deptEdit.html" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg"></a>
-         				<a href="deptDetail.html" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
+         				<a href="deptEdit.jsp" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg"></a>
+         				<a href="deptDetail.jsp" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
          			</td>         			
          		</tr> 
           		<tr>
@@ -106,8 +107,8 @@
          			<td>花千骨</td>
          			<td>
          				<img alt="" src="../../img/delete.png" class="operateImg">
-         				<a href="deptEdit.html" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg"></a>
-         				<a href="deptDetail.html" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
+         				<a href="deptEdit.jsp" target="contentPage"><img alt="" src="../../img/edit.png" class="operateImg"></a>
+         				<a href="deptDetail.jsp" target="contentPage"><img alt="" src="../../img/detail.png" class="operateImg"></a>
          			</td>         			
          		</tr>           		     		         	
          	</table>

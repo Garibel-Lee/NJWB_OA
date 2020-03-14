@@ -16,6 +16,12 @@ import java.util.List;
  */
 public class MenuDaoImpl implements MenuDao {
     private static Logger logger = Logger.getLogger(MenuDaoImpl.class);
+
+    public void setMenuDao(MenuDao menuDao) {
+        this.menuDao = menuDao;
+    }
+
+    private  MenuDao menuDao;
     @Override
     public Menu getMenuByID(Integer id) {
        Menu menuResult=null; ;

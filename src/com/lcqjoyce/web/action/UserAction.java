@@ -1,5 +1,6 @@
 package com.lcqjoyce.web.action;
 
+import com.lcqjoyce.My_JDBC.Init.BeanFactory;
 import com.lcqjoyce.entity.Menu;
 import com.lcqjoyce.entity.User;
 import com.lcqjoyce.service.PermissionsService;
@@ -42,7 +43,7 @@ public class UserAction  {
         User result = userService.login(user);
         // 请求转发
 
-        PermissionsService PermissionsService=new PermissionsServiceImpl();
+        PermissionsService PermissionsService=(PermissionsService) BeanFactory.getObject("permissionsService");
         Map<Menu, List<Menu>> re= PermissionsService.listAll(result.getRoleId());
         request.setAttribute("roleMap",re);
 
