@@ -16,14 +16,81 @@
         </action>
         <action name="ajaxloginName" method="ajaxloginName" class="ajaxAction">
             <result name="success" type="stream">
-				<![CDATA[
+                <![CDATA[
 				存在
 			]]>
             </result>
             <result name="fail" type="stream">
-				<![CDATA[
+                <![CDATA[
 				不存在
 			]]>
+            </result>
+        </action>
+    </package>
+    <package name="dept" namespace="dept">
+
+        <action name="deptAdd" method="deptAdd" class="deptAction">
+            <result type="stream" name="success">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("部门添加成功,将跳转部门管理主页");
+                 self.location.href="/njwb/dept/dept.jsp";
+
+		    </script>
+		    ]]>
+            </result>
+
+            <result type="stream" name="fail">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("部门添加失败,将跳转部门管理主页");
+		    	self.location.href="/njwb/dept/dept.jsp";
+		    </script>
+		    ]]>
+            </result>
+        </action>
+
+        <action name="deptDelete" method="deptDelete" class="deptAction">
+            <!-- Result 处理后的结果显示name名字唯一 type=以什么样方式跳转（dispatcher 请求转发，redirect 重定向，stream 输出流，直接输出内容）
+                     标签与标签之间，可以是jsp文件，也可以是字符串，也可以是script代码  ，一个action中有多个Result-->
+            <result type="stream" name="success">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("删除成功,将跳转到登录主页");
+                self.location.href="/njwb/dept/dept.jsp";
+		    </script>
+		    ]]>
+            </result>
+
+            <result type="stream" name="fail">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("删除失败,部门员工不为空");
+		    	self.location.href="/njwb/dept/dept.jsp";
+		    </script>
+		    ]]>
+            </result>
+        </action>
+
+        <action name="deptUpdate" method="deptUpdate" class="deptAction">
+            <!-- Result 处理后的结果显示name名字唯一 type=以什么样方式跳转（dispatcher 请求转发，redirect 重定向，stream 输出流，直接输出内容）
+                     标签与标签之间，可以是jsp文件，也可以是字符串，也可以是script代码  ，一个action中有多个Result-->
+            <result type="stream" name="success">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("修改部门信息成功,将跳转到登录主页");
+                self.location.href="/njwb/dept/dept.jsp";
+		    </script>
+		    ]]>
+            </result>
+
+            <result type="stream" name="fail">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("修改部门信息失败,请联系服务商");
+		    	self.location.href="/njwb/dept/dept.jsp";
+		    </script>
+		    ]]>
             </result>
         </action>
     </package>

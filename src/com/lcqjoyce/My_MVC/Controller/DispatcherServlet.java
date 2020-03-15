@@ -70,7 +70,7 @@ public class DispatcherServlet extends HttpServlet {
 			namespace = uriPath.substring(uriPath.indexOf("/")+1,uriPath.lastIndexOf("/"));
 		}
 		logger.warn("namespace:"+namespace);
-		MyPackage myPackage = mvcConfig.getPackage("/");
+		MyPackage myPackage = mvcConfig.getPackage(namespace);
 		if(null==myPackage){
 			logger.warn("没有找到对应的myPackage");
 			throw new RuntimeException("没有找到对应的myPackage");

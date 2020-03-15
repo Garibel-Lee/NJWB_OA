@@ -96,7 +96,7 @@
         </div>
 
         <div id="content-right" class="rft">
-            <iframe src="" name="contentPage" scrolling="yes" frameborder="0" width="788px" height="470px">
+            <iframe id="contentPage" src="" name="contentPage" scrolling="yes" frameborder="0" width="788px" height="470px">
             </iframe>
         </div>
     </div>

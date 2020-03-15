@@ -2,7 +2,7 @@ package com.lcqjoyce.entity;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @Data
@@ -24,8 +24,8 @@ public class Employee {
 
     private String phone;
 
-    private LocalDateTime entryTime;
+    private LocalDate entryTime;
 
-    private LocalDateTime createTime;
+    private LocalDate createTime;
 
 }

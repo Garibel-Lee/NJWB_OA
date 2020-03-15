@@ -5,6 +5,91 @@
 <html>
   <head>
     <title>用户登录</title>
+
+	  <title>用户登录</title>
+
+	  <meta http-equiv="pragma" content="no-cache">
+	  <meta http-equiv="cache-control" content="no-cache">
+	  <meta http-equiv="expires" content="0">
+	  <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+	  <meta http-equiv="description" content="This is my page">
+	  <link rel="stylesheet" type="text/css" href="/css/reset.css">
+	  <link rel="stylesheet" type="text/css" href="/css/login.css">
+	  <script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
+	  <style type="text/css">
+		  body{
+			  background-color: #0070A2;
+		  }
+	  </style>
+	  <script type="text/javascript">
+		 /* //页面加载时，生成随机验证码
+		  window.onload=function(){
+			  createCode(4);
+		  }*/
+
+		 /*//生成4位验证码的方法
+		 function createCode(length) {
+			 var code = "";
+			 var codeLength = parseInt(length); //验证码的长度
+			 //var checkCode =  $(".checkCode");
+			 var checkCode = document.getElementById("checkCode");
+			 //所有候选组成验证码的字符
+			 var codeChars = new Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+					 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+					 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+			 //循环组成验证码的字符串
+			 for (var i = 0; i < codeLength; i++){
+				 //获取随机验证码下标
+				 var charNum = Math.floor(Math.random() * 62);//返回最大整数
+				 //组合成指定字符验证码
+				 code += codeChars[charNum];
+			 }
+			 if (checkCode){
+				 //为验证码区域添加样式名
+				 checkCode.className = "code";
+				 //将生成验证码赋值到显示区
+				 checkCode.innerHTML = code;
+			 }
+		 }*/
+
+		  //判断用户名，密码，验证码是否正确
+		  function checkBeforeSubmit(){
+			/*		  //获取输入的验证码
+					  var inputCode =  $("#code").val();
+					  //获取显示区生成的验证码
+					  var checkCode = document.getElementById("checkCode").innerHTML;
+					  //var checkCode =  $(".checkCode").innerHTML();
+					  if (inputCode == ""){
+						  alert("验证码不能为空");
+						  return false;
+					  }else if (inputCode.toUpperCase() != checkCode.toUpperCase()){
+						  alert("验证码输入有误");
+						  createCode(4);
+						  return false;
+					  }*/
+
+			  var userAccount = $("#userName").val();
+			  if(userAccount == ""){
+				  alert("用户名不能为空");
+				  return false;
+			  }
+			  //非法字符
+			  var patrn=/[\^\*<>\/[\]]/;
+			  if(patrn.test(userAccount)){
+				  alert("用户名格式错误：不可非法字符（< > / \ * ^）");
+				  return false;
+			  }
+			  var password = $("#userPwd").val();
+			  if(password == ""){
+				  alert("密码不能为空");
+				  return false;
+			  }
+			  return true;
+		  }
+	  </script>
+
+
+
 	  <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
 	  <script type="text/javascript">
 		  $(function(){
@@ -58,7 +143,7 @@
   </head>
 
   <body>
-  	<form action="login.do" method="post">
+  	<form action="login.do" method="post"  onsubmit="return checkBeforeSubmit()">
      <div id = "login">
      	  <div id = "title">
      	  		NJWB管理系统
@@ -90,14 +175,19 @@
      	  		</tr>
      	  		
      	  		<tr>
-     	  			<td>&nbsp;</td>
+     	  			<td><span id="sliding"></span></td>
      	  			<td colspan="2">
-     	  				<input type= "submit" value="登&nbsp;录" class="btn" onclick="myJson()"/>
+     	  				<input type= "submit" id="submit" value="登&nbsp;录" class="btn" onclick="myJson()"/>
      	  			</td>
      	  		</tr>
      	  		    	  		     	  
      	  </table>
      </div>
 	</form>
+	<c:if test="${isError}">
+		<script type="text/javascript">
+			alert("${errorMessage}");
+		</script>
+	</c:if>
   </body>
 </html>
