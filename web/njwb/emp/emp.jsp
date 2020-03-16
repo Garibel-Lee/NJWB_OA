@@ -115,9 +115,9 @@
     <tfoot></tfoot>
 </table>
 <div style="width: 500px; margin-left: 270px;margin-top: 10px;">
-    <a href="emp/queryEmp.do?currentPage=1" target="contentPage">首页</a> &nbsp;
+    <a href="emp/queryEmp.do?empName=${empName}&empDept=${empDept}&currentPage=1" target="contentPage">首页</a> &nbsp;
     <c:if test="${empResult.currentPage==1}" var="pre">
-        <a href="emp/queryEmp.do?currentPage=1">上一页</a> &nbsp;
+        <a href="emp/queryEmp.do?empName=${empName}&empDept=${empDept}&currentPage=1">上一页</a> &nbsp;
     </c:if>
     <c:if test="${ ! pre }">
         <a href="emp/queryEmp.do?empName=${empName}&empDept=${empDept}&currentPage=${empResult.currentPage-1}"
