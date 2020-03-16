@@ -54,10 +54,12 @@
         }
     </style>
     <script type="text/javascript">
+        (function() {
+            alert("DOM还没加载");
+        })(jQuery)
         $(document).ready(function () {
             $.ajax({
                 type: "POST",
-                async:true,
                 url: "dept/deptGetall.do",
                 success: function (msg) {
                     var depts = $.parseJSON(msg);
@@ -146,7 +148,7 @@
     <c:if test="${ ! next }">
         <a href="/njwb/emp/emp.jsp?currentPage=${currentPage+1}" target="contentPage">下一页</a>&nbsp;
     </c:if>
-    <a href="/njwb/emp/emp.jsp?currentPage=${totalCount }" target="contentPage">末 页</a><br/>
+    <a href="/njwb/emp/emp.jsp?currentPage=${totalCount}" target="contentPage">末 页</a><br/>
     &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;一共${totalCount}页,一共${total}条
 </div>
 </body>

@@ -145,7 +145,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public List<Employee> getQueryEmployees(String empName, String empDo) {
-        logger.debug("EmployeeDaoImpl，调用getEmployeeByDeptNo");
+        logger.debug("EmployeeDaoImpl，调用getQueryEmployees");
         StringBuffer sql = new StringBuffer("SELECT\n" +
                 "t_employee.id,\n" +
                 "t_employee.t_emp_no,\n" +

@@ -5,7 +5,6 @@ import com.lcqjoyce.entity.Menu;
 import com.lcqjoyce.entity.User;
 import com.lcqjoyce.service.PermissionsService;
 import com.lcqjoyce.service.UserService;
-import com.lcqjoyce.service.impl.PermissionsServiceImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -48,7 +47,6 @@ public class UserAction  {
         request.setAttribute("roleMap",re);
 
 
-
         if(null!=result){ //成功
             request.getSession().setAttribute("user", result);//放置session
             resultString="success";
@@ -80,10 +78,15 @@ public class UserAction  {
     }
     /*权限控制*/
     public String  roleController(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        User user=(User)request.getSession().getAttribute("user");
+       /* User user=(User)request.getSession().getAttribute("user");
         PermissionsService PermissionsService=new PermissionsServiceImpl();
         Map<Menu, List<Menu>> re= PermissionsService.listAll(user.getRoleId());
-        request.setAttribute("roleMap",re);
+        request.setAttribute("roleMap",re);*/
         return "";
     }
+    public String  loginOut(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        request.getSession().setAttribute("user",null);
+        return "success";
+    }
+
 }
