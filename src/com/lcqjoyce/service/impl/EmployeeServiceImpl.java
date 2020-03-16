@@ -5,6 +5,7 @@ import com.lcqjoyce.dao.DeptDao;
 import com.lcqjoyce.dao.EmployeeDao;
 import com.lcqjoyce.entity.Employee;
 import com.lcqjoyce.service.EmployeeService;
+import com.lcqjoyce.util.page.PageResult;
 import org.apache.log4j.Logger;
 
 import java.util.List;
@@ -30,6 +31,49 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getEmployeesPerPage(int currentPage, int size) {
         return employeeDao.getEmployeesPerPage(currentPage, size);
     }
+
+    @Override
+    public List<Employee> getQueryEmployees(String empName, String empNo) {
+
+        logger.info(empName+"***************"+empNo);
+        if((empName == null ||  "".equals(empName)) && (empNo == null ||  "".equals(empNo)))
+            return employeeDao.getAllEmployees();
+        else
+            return employeeDao.getQueryEmployees(empName,empNo);
+
+    }
+
+    /**
+     * 分页加高级查询
+     * @param empName
+     * @param empDept
+     * @return
+     */
+    @Override
+    public PageResult getEmployeesWithConditionByPage(String empName, String empDept,Integer currentPage) {
+        int count = employeeDao.queryForCount(empName,empDept);
+        if(count > 0){
+            List<Employee> employees = employeeDao.queryByPage(empName,empDept,currentPage,4);
+            return new PageResult(employees,count,Integer.valueOf(currentPage),4);
+        }
+        return PageResult.empty(4);
+    }
+
+    /*
+    		int count = flightDao.queryForCount(qo);
+		if(count > 0) {
+			List<Flight> list = flightDao.query(qo);
+			return new PageResult(list, count, qo.getCurrentPage(), qo.getPageSize());
+		}
+		return PageResult.empty(qo.getPageSize());
+     */
+
+
+
+
+
+
+
 
     @Override
     public int addEmployee(Employee emp) {
@@ -79,22 +123,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getQueryEmployees(String empName, String empDo) {
-
-        logger.info(empName+"***************"+empDo);
-        if(empName.isEmpty()){
-            empName="";
-        }  if(empDo.isEmpty()){
-            empDo="";
-        }
-        if ( empName.equals("") && empDo.equals(""))
-            return employeeDao.getAllEmployees();
-        else
-            return employeeDao.getQueryEmployees(empName,empDo);
-
-    }
-
-    @Override
     public int deleteEmployee(Employee emp) {
         int count = 0;
         logger.debug("EmployeeServiceImpl类中，deleteEmployee");
@@ -113,6 +141,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return count;
     }
+
+
 
     public void setEmployeeDao(EmployeeDao employeeDao) {
         this.employeeDao = employeeDao;

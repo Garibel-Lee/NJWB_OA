@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
+    <base href="/">
     
     <title>报销管理</title>
     
@@ -16,9 +16,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>css/reset.css">
-    <link rel="stylesheet" type="text/css" href="<%=basePath %>css/main.css">
-	<script type="text/javascript" src="<%=basePath %>js/jquery-1.8.3.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+	<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				//提交方式POST
   				type:"POST",
   				//目标地址
-  				url:"<%=basePath%>payment/getPayment.do",
+  				url:"/payment/getPayment.do",
   				//表示传到服务器的值
   				data:{
   					  "paymentType": paymentType,
@@ -97,7 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if(true == result){
 				$.ajax({
 					type:"POST",
-  					url:"<%=basePath%>payment/deletePaymentById.do",
+  					url:"/payment/deletePaymentById.do",
   					//通过报销表ID删除该用户
   					data:{"paymentId":paymentId},
   					success:function(msg){
@@ -124,7 +124,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<h1 class="title">首页  &gt;&gt;报销管理 </h1>
          	
          	<div class="add">
-         		<a href="<%=basePath%>payment/paymentAdd.jsp" target="contentPage"><img src="img/add.png" width="18px" height="18px">添加报销</a>
+         		<a href="/payment/paymentAdd.jsp" target="contentPage"><img src="img/add.png" width="18px" height="18px">添加报销</a>
          	</div>
          	<div style="margin-top: 50px;width: 750px;margin-left: 50px;">
 	         	报销类型：

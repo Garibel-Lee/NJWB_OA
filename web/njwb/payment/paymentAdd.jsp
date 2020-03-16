@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
+    <base href="/">
     
     <title>报销管理添加页面</title>
     
@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<script type="text/javascript" src="<%=basePath %>js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -70,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			//将页面的数据传到后台去
 			$.ajax({
 			   type : "POST",
-			   url: "<%=basePath%>payment/addPayment.do",
+			   url: "/payment/addPayment.do",
 			   data: {"paymentType":paymentType,//报销类型
 				   	  "paymentIntro":paymentIntro,//摘要
 				   	  "money":money,//金额
@@ -125,7 +125,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   				<input type = "button" value="草稿" onclick="addPayment('草稿')"/>
 	   				<input type = "button" value="提交" onclick="addPayment('已提交')"/>
 	   				<input type = "reset" value="重置"/>
-					<a href="<%=basePath%>payment/payment.jsp" target="contentPage"><input type="button" value="返回"></a>
+					<a href="/payment/payment.jsp" target="contentPage"><input type="button" value="返回"></a>
 	   			</td>
 	   		</tr>  	
 	   	</table>

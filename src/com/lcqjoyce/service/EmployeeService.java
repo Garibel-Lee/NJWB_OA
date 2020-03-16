@@ -1,6 +1,7 @@
 package com.lcqjoyce.service;
 
 import com.lcqjoyce.entity.Employee;
+import com.lcqjoyce.util.page.PageResult;
 
 import java.util.List;
 
@@ -22,7 +23,9 @@ public interface EmployeeService {
 
     int updateEmployee(Employee emp);
 
-    List<Employee> getQueryEmployees(String empName, String empDo);
+    List<Employee> getQueryEmployees(String empName, String empNo);
 
     int deleteEmployee(Employee emp);
+
+    PageResult getEmployeesWithConditionByPage(String empName, String empDept, Integer currentPage);
 }

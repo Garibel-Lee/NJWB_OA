@@ -24,7 +24,11 @@ public interface EmployeeDao {
 
     int updateEmployee(Employee emp);
 
-    List<Employee> getQueryEmployees(String empName, String empDo);
+    List<Employee> getQueryEmployees(String empName, String empNo);
 
     int deleteEmployee(Employee emp);
+
+    Integer queryForCount(String empName, String empDept);
+
+    List<Employee> queryByPage(String empName, String empDept,Integer currentPage,Integer pageSize);
 }

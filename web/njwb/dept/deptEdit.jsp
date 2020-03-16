@@ -10,7 +10,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <base href="<%=basePath%>">
+    <base href="/">
 
     <title>部门编辑</title>
 

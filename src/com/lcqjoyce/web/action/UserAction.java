@@ -85,7 +85,7 @@ public class UserAction  {
         return "";
     }
     public String  loginOut(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-        request.getSession().setAttribute("user",null);
+        request.getSession().removeAttribute("user");
         return "success";
     }
 

@@ -6,7 +6,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
+    <base href="/">
     
     <title>账户管理</title>
     
@@ -15,8 +15,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>css/reset.css">
-    <link rel="stylesheet" type="text/css" href="<%=basePath %>css/main.css">
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
 	<style type="text/css">
 		td{
 			-moz-user-select:none;
@@ -34,7 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			text-decoration : none;
 		}
 	</style>
-	<script type="text/javascript" src="<%=basePath %>js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript">
 		function search(){
   			var userAccount = $("#userAccount").val();
@@ -42,7 +42,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			var roleName = $("#roleName").val();
   			$.ajax({
   				type:"POST",
-  				url:"<%=basePath%>userVO/getUserVO.do",
+  				url:"/userVO/getUserVO.do",
   				data:{
   					  "userAccount": userAccount,
   					  "userStatus": userStatus,
@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function getAllRoleName(){
 			$.ajax({
 					type:"POST",
-  					url:"<%=basePath%>role/getAllRole.do",
+  					url:"/role/getAllRole.do",
   					success:function(msg){
   						var roles = $.parseJSON(msg);
   						var roleName = $("#roleName");
@@ -92,7 +92,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if(true == result){
 				$.ajax({
 					type:"POST",
-  					url:"<%=basePath%>user/deleteUserById.do",
+  					url:"/user/deleteUserById.do",
   					data:{"userId":userId},
   					success:function(msg){
   							if(msg != ""){
@@ -116,7 +116,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          	<h1 class="title">首页  &gt;&gt;账户管理 </h1>
          	
          	<div class="add">
-         		<a href="<%=basePath%>user/addUser.jsp" target="contentPage"><img src="<%=basePath %>img/add.png" width="18px" height="18px">添加账户</a>
+         		<a href="/user/addUser.jsp" target="contentPage"><img src="/img/add.png" width="18px" height="18px">添加账户</a>
          	</div>
          	<div style="margin-top: 50px;width: 750px;margin-left: 50px;">
 	         	帐号：<input type="text" id="userAccount" style="width: 100px;margin-right: 20px;">

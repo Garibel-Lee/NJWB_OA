@@ -4,15 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.lcqjoyce.service.EmployeeService" %>
 <%
+    /*
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
-    String currPage = request.getParameter("currentPage");
-/*    String empName=request.getParameter("empName");
-    String empDo=request.getParameter("empNo");*/
 
     EmployeeService service = (EmployeeService) BeanFactory.getObject("employeeService");
-    /*    List<Employee> employees = service.getQueryEmployees("李","");*/
-    List<Employee> employees = service.getAllEmployees();
+    List<Employee> employees = service.getQueryEmployees(empName, empNo);
+    List<Employee> employee = service.getAllEmployees();
     List<Employee> fenyeEmployees = null;
     //集合获得了，如何让EL表达式可以访问
     pageContext.setAttribute("list", employees);
@@ -31,32 +29,20 @@
     pageContext.setAttribute("some", fenyeEmployees);
     pageContext.setAttribute("totalCount", totalCount);
     pageContext.setAttribute("total", employees.size());
-
+    pageContext.setAttribute("empNo", empNo);
+    pageContext.setAttribute("empName", empName);*/
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <base href="<%=basePath%>">
+    <base href="/">
     <title>员工管理</title>
-
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="0">
-    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-    <meta http-equiv="description" content="This is my page">
-    <link rel="stylesheet" type="text/css" href="<%=basePath %>css/reset.css">
-    <link rel="stylesheet" type="text/css" href="<%=basePath %>css/main.css">
-    <script type="text/javascript" src="<%=basePath %>js/jquery-1.8.3.js"></script>
-    <style type="text/css">
-        td {
-            -webkit-user-select: none;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <script type="text/javascript" src="/js/emp.js"></script>
+    <script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
     <script type="text/javascript">
-        (function() {
-            alert("DOM还没加载");
-        })(jQuery)
         $(document).ready(function () {
             $.ajax({
                 type: "POST",
@@ -71,12 +57,6 @@
                 }
             });
         });
-        function del(empNo) {
-            var result = window.confirm("确认要删除吗?");
-            if (true == result) {
-                window.location.href = "emp/empDelete.do?empNo=" + empNo;
-            }
-        }
     </script>
 </head>
 
@@ -87,14 +67,15 @@
     <a href="/njwb/emp/empAdd.jsp" target="contentPage"><img src="/img/add.png" width="18px" height="18px">添加员工</a>
 </div>
 <div style="margin-top: 50px;width: 750px;margin-left: 50px;">
+    <form action="emp/queryEmp.do" method="post">
+        姓名：<input type="text" id="empName" name="empName" style="width: 100px;height: 20px">
+        部门：
 
-    姓名：<input type="text" id="empName"  name="empName" style="width: 100px;height: 20px">
-    部门：
-    <select id="empDept" name="empDept" style="width: 100px;height: 20px">
-        <option>请选择</option>
-    </select>
-    <input type="submit" value="查询" style="width: 50px;">
-
+        <select id="empDept" name="empDept" style="width: 100px;height: 20px">
+            <option value="">请选择</option>
+        </select>
+        <input type="submit" value="查询" style="width: 50px;">
+    </form>
 </div>
 <table class="deptInfo">
     <thead>
@@ -110,7 +91,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="employee" items="${some}">
+    <c:forEach var="employee" items="${empResult.listData}">
         <tr>
             <td>${employee.empNo}</td>
             <td>${employee.empName}</td>
@@ -127,7 +108,6 @@
                 <a href="/njwb/emp/empDetail.jsp?empNo=${employee.empNo}" target="contentPage"><img alt=""
                                                                                                     src="/img/detail.png"
                                                                                                     class="operateImg"></a>
-
             </td>
         </tr>
     </c:forEach>
@@ -135,21 +115,38 @@
     <tfoot></tfoot>
 </table>
 <div style="width: 500px; margin-left: 270px;margin-top: 10px;">
-    <a href="/njwb/emp/emp.jsp?currentPage=1" target="contentPage">首页</a> &nbsp;
-    <c:if test="${currentPage==1}" var="pre">
-        <a href="/njwb/emp/emp.jsp?currentPage=1">上一页</a> &nbsp;
+    <a href="emp/queryEmp.do?currentPage=1" target="contentPage">首页</a> &nbsp;
+    <c:if test="${empResult.currentPage==1}" var="pre">
+        <a href="emp/queryEmp.do?currentPage=1">上一页</a> &nbsp;
     </c:if>
     <c:if test="${ ! pre }">
-        <a href="/njwb/emp/emp.jsp?currentPage=${currentPage-1}" target="contentPage">上一页</a> &nbsp;
+        <a href="emp/queryEmp.do?empName=${empName}&empDept=${empDept}&currentPage=${empResult.currentPage-1}"
+           target="contentPage">上一页</a> &nbsp;
     </c:if>
-    <c:if test="${currentPage==totalCount}" var="next">
-        <a href="/njwb/emp/emp.jsp?currentPage=${totalCount}" target="contentPage">下一页</a>&nbsp;
+    <c:forEach begin="${empIndex.beginIndex}" end="${empIndex.endIndex}" var="index">
+        <c:choose>
+            <c:when test="${empResult.currentPage} == ${index}">
+                <a id="middleIndex" href="emp/queryEmp.do?empName=${empName}&empDept=${empDept}&currentPage=${index}"
+                   target="contentPage">${index}</a>
+            </c:when>
+            <c:otherwise>
+                <a href="emp/queryEmp.do?empName=${empName}&empDept=${empDept}&currentPage=${index}"
+                   target="contentPage">${index}</a>&nbsp;
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <c:if test="${empResult.currentPage==empResult.totalPage}" var="next">
+        <a href="emp/queryEmp.do?empName=${empName}&empDept=${empDept}&currentPage=${empResult.totalPage}"
+           target="contentPage">下一页</a>&nbsp;
     </c:if>
     <c:if test="${ ! next }">
-        <a href="/njwb/emp/emp.jsp?currentPage=${currentPage+1}" target="contentPage">下一页</a>&nbsp;
+        <a href="emp/queryEmp.do?empName=${empName}&empDept=${empDept}&currentPage=${empResult.currentPage+1}"
+           target="contentPage">下一页</a>&nbsp;
     </c:if>
-    <a href="/njwb/emp/emp.jsp?currentPage=${totalCount}" target="contentPage">末 页</a><br/>
-    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;一共${totalCount}页,一共${total}条
+    <a href="emp/queryEmp.do?empName=${empName}&empDept=${empDept}&currentPage=${empResult.totalPage}"
+       target="contentPage">末
+        页</a><br/>
+    &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;一共${empResult.totalPage}页,一共${empResult.totalCount}条
 </div>
 </body>
 </html>

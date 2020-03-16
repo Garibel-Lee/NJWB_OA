@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
+    <base href="/">
     
     <title>请假管理</title>
     
@@ -16,9 +16,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>css/reset.css">
-    <link rel="stylesheet" type="text/css" href="<%=basePath %>css/main.css">
-	<script type="text/javascript" src="<%=basePath %>js/jquery-1.8.3.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+	<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
 	<style type="text/css">
 		td{
 			-moz-user-select:none;
@@ -40,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			var applyStatus = $("#applyStatus").val();
   			$.ajax({
   				type:"POST",
-  				url:"<%=basePath%>holiday/getHoliday.do",
+  				url:"/holiday/getHoliday.do",
   				data:{
   					  "applyName": applyName,
   					  "holidayType": holidayType,
@@ -90,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if(true == result){
 				$.ajax({
 					type:"POST",
-  					url:"<%=basePath%>holiday/deleteHolidayById.do",
+  					url:"/holiday/deleteHolidayById.do",
   					data:{"holidayId":holidayId},
   					success:function(msg){
   						if(msg != ""){
@@ -114,7 +114,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          	<h1 class="title">首页  &gt;&gt;请假管理 </h1>
          	
          	<div class="add">
-         		<a href="<%=basePath%>holiday/addHoliday.jsp" target="contentPage"><img src="<%=basePath %>img/add.png" width="18px" height="18px">添加请假</a>
+         		<a href="/holiday/addHoliday.jsp" target="contentPage"><img src="/img/add.png" width="18px" height="18px">添加请假</a>
          	</div>
          	<div style="margin-top: 50px;width: 750px;margin-left: 50px;">
 	         	申请人：<input type="text" id="applyName" style="width: 100px;margin-right: 20px;">

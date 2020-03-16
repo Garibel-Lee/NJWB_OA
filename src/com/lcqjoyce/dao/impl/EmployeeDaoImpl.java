@@ -1,12 +1,15 @@
 package com.lcqjoyce.dao.impl;
 
 import com.lcqjoyce.My_JDBC.Handle.JdbcTemplate;
+import com.lcqjoyce.My_JDBC.Handle.RowMapper;
 import com.lcqjoyce.dao.EmployeeDao;
 import com.lcqjoyce.dao.mapper.EmployeeMapper;
 import com.lcqjoyce.entity.Employee;
 import org.apache.log4j.Logger;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -144,7 +147,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public List<Employee> getQueryEmployees(String empName, String empDo) {
+    public List<Employee> getQueryEmployees(String empName, String empNo) {
         logger.debug("EmployeeDaoImpl，调用getQueryEmployees");
         StringBuffer sql = new StringBuffer("SELECT\n" +
                 "t_employee.id,\n" +
@@ -159,18 +162,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 "t_employee.t_create_time\n" +
                 "FROM\n" +
                 "t_employee where 1=1 \n");
-        Object[] objects = {};
+        Object[] objects;
 
-        if (empName.equals("") && !empDo.equals("")) {
-            sql.append("and t_emp_no= "+empDo);
-            objects = new Object[]{empDo};
-        } else if (!empName.equals("") && empDo.equals("")) {
-            sql.append("and t_emp_name like  '%"+empName+"%'");
-            objects = new Object[]{empName};
-        } else if (!empName.equals("") && !empDo.equals("")) {
-            sql.append("and t_emp_name like  '%"+empName+"%'");
-            sql.append("and t_emp_no= "+empDo);
-            objects = new Object[]{empName, empDo};
+        if (!(empNo == null || "".equals(empNo))) {
+            sql.append(" and t_emp_no= " + "'" + empNo + "'");
+
+        }
+        if (!(empName == null || "".equals(empName))) {
+            sql.append(" and t_emp_name like  '%" + empName + "%'");
+
         }
 
         List<Employee> lists = JdbcTemplate.executeQuery(sql.toString(), new EmployeeMapper(), null);
@@ -196,4 +196,52 @@ public class EmployeeDaoImpl implements EmployeeDao {
         }
         return count;
     }
+
+    @Override
+    public Integer queryForCount(String empName, String empDept) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("select count(id) from t_employee  where 1=1 ");
+        if (!(empDept == null || "".equals(empDept))) {
+            sql.append(" and t_emp_dept= " + "'" + empDept + "'");
+        }
+        if (!(empName == null || "".equals(empName))) {
+            sql.append(" and t_emp_name like  '%" + empName + "%'");
+        }
+        int result = 0;
+        try {
+            result = JdbcTemplate.executeQuery(sql.toString(), new RowMapper<Integer>() {
+                @Override
+                public List<Integer> mapperList(ResultSet rs) throws SQLException {
+                    List<Integer> list = new ArrayList<>();
+                    if (rs.next()) {
+                        list = new ArrayList<>();
+                        list.add(rs.getInt(1));
+                        return list;
+                    }
+                    return list;
+                }
+
+            }, new Object[0]).get(0);
+        } catch (Exception e) {
+            logger.info("获取员工集合总数出问题");
+        }
+        logger.info("queryForCount"+result);
+        return result;
+    }
+
+    @Override
+    public List<Employee> queryByPage(String empName, String empDept,Integer currentPage,Integer pageSize) {
+        StringBuffer sql = new StringBuffer("select * from t_employee where 1=1 ");
+        if (!(empDept == null || "".equals(empDept))) {
+            sql.append(" and t_emp_dept= " + "'" + empDept + "'");
+        }
+        if (!(empName == null || "".equals(empName))) {
+            sql.append(" and t_emp_name like  '%" + empName + "%'");
+        }
+        sql.append(" limit ?, ?");
+        Object  objects[] = {(currentPage-1)*pageSize,pageSize};
+        return JdbcTemplate.executeQuery(sql.toString(),new EmployeeMapper(),objects);
+    }
+
+
 }

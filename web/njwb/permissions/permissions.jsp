@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
+    <base href="/">
     
     <title>权限管理</title>
     
@@ -16,9 +16,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<link rel="stylesheet" type="text/css" href="<%=basePath %>css/reset.css">
-    <link rel="stylesheet" type="text/css" href="<%=basePath %>css/main.css">
-	<script type="text/javascript" src="<%=basePath %>js/jquery-1.8.3.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/css/main.css">
+	<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
 	<script type="text/javascript">
 		var currentPage;
 		var oldRoleName = "";
@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			oldMenuName = menuName;
   			$.ajax({
   				type:"POST",
-  				url:"<%=basePath%>permissionVO/getPermissionVOByPage.do",
+  				url:"/permissionVO/getPermissionVOByPage.do",
   				data:{"pageNo":pageNo,
   					  "roleName": roleName,
   					  "menuName": menuName
@@ -88,7 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function getAllRoleName(){
 			$.ajax({
 					type:"POST",
-  					url:"<%=basePath%>role/getAllRole.do",
+  					url:"/role/getAllRole.do",
   					success:function(msg){
   						var roles = $.parseJSON(msg);
   						var roleName = $("#roleName");
@@ -102,7 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		function getAllMenuName(){
 			$.ajax({
 					type:"POST",
-  					url:"<%=basePath%>menu/getAllMenu.do",
+  					url:"/menu/getAllMenu.do",
   					success:function(msg){
   						var menus = $.parseJSON(msg);
   						var menuName = $("#menuName");
@@ -118,7 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			if(true == result){
 				$.ajax({
 					type:"POST",
-  					url:"<%=basePath%>permission/deletePermissionById.do",
+  					url:"/permission/deletePermissionById.do",
   					data:{"permissionId":permissionId},
   					success:function(msg){
 						alert("删除成功");
@@ -139,7 +139,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<h1 class="title">首页  &gt;&gt;权限管理 </h1>
          	
          	<div class="add">
-         		<a href="<%=basePath%>permissions/perAdd.jsp" target="contentPage"><img src="img/add.png" width="18px" height="18px">添加权限</a>
+         		<a href="/permissions/perAdd.jsp" target="contentPage"><img src="img/add.png" width="18px" height="18px">添加权限</a>
          	</div>
          	<div style="margin-top: 50px;width: 750px;margin-left: 100px;">
 	         	&nbsp;&nbsp;&nbsp;&nbsp;角色：

@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
+    <base href="/">
     
     <title>员工添加</title>
     
@@ -17,8 +17,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<script type="text/javascript" src="<%=basePath %>js/jquery-1.8.3.js"></script>
-	<script type="text/javascript" src="<%=basePath %>js/laydate/laydate.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="/js/laydate/laydate.js"></script>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -185,7 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   			<td colspan="2">
 	   				<input type = "submit" value="添加"/>
 	   				<input type = "reset" value="重置"/>
-					<a href="<%=basePath%>/njwb/emp/emp.jsp" target="contentPage"><input type="button" value="返回"></a>
+					<a href="//njwb/emp/emp.jsp" target="contentPage"><input type="button" value="返回"></a>
 	   			</td>
 	   		</tr>  	
 	   	</table>

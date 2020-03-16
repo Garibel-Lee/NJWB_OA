@@ -7,7 +7,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
-    <base href="<%=basePath%>">
+    <base href="/">
     
     <title>报销管理明细</title>
     
@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<script type="text/javascript" src="<%=basePath %>js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$.ajax({
 			   type : "POST",
 			   //目标地址
-			   url: "<%=basePath%>payment/getPaymentByPaymentNo.do",
+			   url: "/payment/getPaymentByPaymentNo.do",
 			   //得到后台的
 			   data: {"paymentNo":paymentNo},
 			   success: function(msg){
@@ -108,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</li>
     </ul>
     <div id="back">
-		<a href="<%=basePath%>payment/payment.jsp" target="contentPage"><input type="button" value="返回"></a>
+		<a href="/payment/payment.jsp" target="contentPage"><input type="button" value="返回"></a>
 	</div>
     <input type="hidden" value="${paymentNo}" id="hiddenInput">
   </body>

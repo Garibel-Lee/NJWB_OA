@@ -97,11 +97,11 @@ a {
 }
 
 a:link {
-	color: #616366;
+	color: #4a4c66;
 }
 
 a:visited {
-	color: #616366;
+	color: #100466;
 }
 
 
@@ -154,4 +154,12 @@ a:visited {
 	background-color: #FFEED0;
 	font-size: 16px;
 	font-weight: bold;
+}
+
+#middleIndex{
+	color: #660001 !important;
+}
+
+td {
+	-webkit-user-select: none;
 }

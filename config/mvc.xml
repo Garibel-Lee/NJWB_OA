@@ -179,5 +179,9 @@
 		    ]]>
             </result>
         </action>
+
+        <action name="queryEmp" method="queryEmp" class="empAction">
+            <result type="dispatcher" name="success">/njwb/emp/emp.jsp</result>
+        </action>
     </package>
 </mvc>
