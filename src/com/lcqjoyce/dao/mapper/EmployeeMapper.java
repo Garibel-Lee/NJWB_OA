@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,10 +31,12 @@ public class EmployeeMapper implements RowMapper {
             employee.setEmpNo(rs.getString("t_emp_no"));
             employee.setEmpName(rs.getString("t_emp_name"));
             employee.setEmpDept(rs.getString("t_emp_dept"));
+            employee.setEducation(rs.getString("t_education"));
+            employee.setPhone(rs.getString("t_phone"));
             employee.setSex(rs.getString("t_sex"));
             try {
-              //  employee.setEntryTime(LocalDate.parse(rs.getString("t_entry_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
-              //  employee.setCreateTime(LocalDate.parse(rs.getString("t_create_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
+              employee.setEntryTime(LocalDate.parse(rs.getString("t_entry_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+               employee.setCreateTime(LocalDate.parse(rs.getString("t_create_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             } catch (Exception e) {
                 logger.debug("datatime localtime日期转化 失败");
                 e.printStackTrace();

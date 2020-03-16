@@ -78,6 +78,7 @@ public class DispatcherServlet extends HttpServlet {
 		String actionName=uriPath.substring(uriPath.lastIndexOf("/")+1,uriPath.lastIndexOf("."));//最后一个斜杠后面的内容，点之前的内容
 		Action action = myPackage.getAction(actionName);
 		System.out.println("actionName:"+actionName);
+		logger.info(myPackage.toString());
 		if(null==action){
 			logger.warn("没有找到对应的action");
 			throw new RuntimeException("没有找到对应的action");
@@ -128,6 +129,8 @@ public class DispatcherServlet extends HttpServlet {
 				out.write(result.getContent());
 				out.flush();
 				out.close();
+			}else  if("ajax".equalsIgnoreCase(type)){
+
 			}
 		}
 		//System.out.println(contentString);	

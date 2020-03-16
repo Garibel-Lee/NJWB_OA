@@ -49,17 +49,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$(document).ready(function(){
 			$.ajax({
 					type:"POST",
-  					url:"<%=basePath%>dept/getAllDept.do",
+  					url:"dept/deptGetall.do",
   					success:function(msg){
   						var depts = $.parseJSON(msg);
   						var empDept = $("#empDept");
   						for(var i = 0; i < depts.length;i++){
-  							var option = $("<option>"+depts[i].deptName+"</option>");
+  							var option = $("<option value="+depts[i].deptNo+">"+depts[i].deptName+"</option>");
   							empDept.append(option);
   						}
   					}
 				});
   		});
+
 		function checkBeforeSubmit(){
 			//验证员工姓名
 			var empName = $("#empName").val();
@@ -184,7 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   			<td colspan="2">
 	   				<input type = "submit" value="添加"/>
 	   				<input type = "reset" value="重置"/>
-					<a href="<%=basePath%>emp/emp.jsp" target="contentPage"><input type="button" value="返回"></a>
+					<a href="<%=basePath%>/njwb/emp/emp.jsp" target="contentPage"><input type="button" value="返回"></a>
 	   			</td>
 	   		</tr>  	
 	   	</table>

@@ -1,8 +1,15 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page import="com.lcqjoyce.entity.Employee" %>
+<%@ page import="com.lcqjoyce.service.EmployeeService" %>
+<%@ page import="com.lcqjoyce.My_JDBC.Init.BeanFactory" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String empNo=(String) request.getParameter("empNo");
+	EmployeeService service=(EmployeeService) BeanFactory.getObject("employeeService");
+	Employee emp=service.getEmployeeByNo(empNo);
+	request.setAttribute("emp",emp);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -19,7 +26,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="description" content="This is my page">
 	<script type="text/javascript" src="<%=basePath %>js/jquery-1.8.3.js"></script>
 	<script type="text/javascript" src="<%=basePath %>js/laydate/laydate.js"></script>
-	<style type="text/css">
+	  <script type="text/javascript">
+		  $(document).ready(function(){
+			  $.ajax({
+				  type:"POST",
+				  url:"dept/deptGetall.do",
+				  success:function(msg){
+					  var depts = $.parseJSON(msg);
+					  var empDept = $("#empDept");
+					  for(var i = 0; i < depts.length;i++){
+
+					  	if("${emp.empDept}"==depts[i].deptNo) {
+							var option = $("<option selected=selected   value=" + depts[i].deptNo + ">" + depts[i].deptName + "</option>");
+							empDept.append(option);
+					  	}
+						else {
+							option = $("<option   value=" + depts[i].deptNo + ">" + depts[i].deptName + "</option>");
+							empDept.append(option);
+						}
+					  }
+				  }
+			  });
+			  $("#sex").attr("value", "${emp.sex}");
+
+			  $("#education").attr("value", "${emp.education}");
+		  });
+		  function refesh() {
+			  $("#empDept").attr("value", "${emp.empDept}");
+		  }
+	  </script>
+
+	  <style type="text/css">
 		body,div,table,tr,td{
 			margin: 0px;
 			padding: 0px;
@@ -41,124 +78,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			text-decoration: none;
 		}
 	</style>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$.ajax({
-					type:"POST",
-  					url:"<%=basePath%>dept/getAllDept.do",
-  					success:function(msg){
-  						//从后台得到的数据，转换成object
-  						depts = $.parseJSON(msg);
-  						 var empDept = $("#empDept");
-  						  //每次获取时清空
-  						 empDept.html("");
-  						 var op = $("<option></option>");
-  						 op.html("请选择");
-  						 empDept.append(op);
-  						 //遍历
-						for(var i = 0; i < depts.length;i++){
-							var option = $("<option>"+depts[i].deptName+"</option>");
-							empDept.append(option);
-						}
-  					}
-				});
-			refresh();
-  		});
-		var oldDeptName;
-		function refresh(){
-			//用一个隐藏框取出后台的数据
-			var empNo = $("#hiddenInput").val();
-			var deptName;
-			$.ajax({
-			   type : "POST",
-			   url: "<%=basePath%>emp/getEmpByEmpNo.do",
-			  //根据员工编号修改信息
-			   data: {"empNo":empNo},
-			   success: function(msg){
-				 var emp = $.parseJSON(msg);
-				  var empNo = emp.empNo;
-				  var empName = emp.empName;
-				  //当部门名为空的时候 请选择
-				  if(emp.deptName ==""){
-					  deptName = "请选择";
-				  }else{
-					  //如果不是 显示当前部门名称
-				  	deptName = emp.deptName;
-				  }
-				  $("#empDept").val(deptName);
-				  oldDeptName = emp.empDept;
-				  var sex = emp.sex;
-				  var education = emp.education;
-				  var phone = emp.phone;
-				  var entryDate = emp.entryTime;
-				  var entryTimeF = (entryDate.year+1900)+"-"+(entryDate.month+1)+"-"+(entryDate.date);
-				  $("#empNo").val(empNo);
-				  $("#empName").val(empName);
-				  $("#sex").val(sex);
-				  $("#education").val(education);
-				  $("#phone").val(phone);
-				  $("#entryTime").val(entryTimeF);
-				}
-			 });
-		}
-		function checkBeforeSubmit(){
-			//验证员工姓名
-			var empName = $("#empName").val();
-			if(empName == ""){
-				alert("员工姓名不能为空");
-				return false;
-			}
-			//验证手机
-			var patrnP=/^1[0-9]{10}$/;
-			var phone = $("#phone").val();
-			if(phone == ""){
-				alert("手机不能为空");
-				return false;
-			}
-			if(!patrnP.test(phone)){
-				alert("手机格式错误（例：1xxxxxxxxxx(共11位)）");
-				return false;
-			}
-			//验证入职时间
-			var entryTime = $("#entryTime").val();
-			if(entryTime == ""){
-				alert("入职时间不能为空");
-				return false;
-			}
-			//验证性别
-			var sex = $("#sex").val();
-			if(sex == "请选择"){
-				alert("请选择性别 ");
-				return false;
-			}
-			//验证学历
-			var education = $("#education").val();
-			if(education == "请选择"){
-				alert("请选择学历 ");
-				return false;
-			}
-			
-			return true;
-		}
-	</script>
+
 
   </head>
   
   <body>
-	<%
-   		String empNo = request.getParameter("empNo");
-   		request.setAttribute("empNo",empNo);
-   	%>
-   	<div id="container">
-   		<h3 style="width: 200px;margin: 0 auto;">员工修改</h3>
-	   	<form action="emp/updateEmp.do" method="post" onsubmit="return checkBeforeSubmit()">
+   	<div id="container" >
+   		<h3 style="width: 200px;margin: 0 auto;">  ${emp.empDept}的${emp.empNo}修改</h3>
+	   	<form action="emp/empUpdate.do" method="post" onsubmit="return checkBeforeSubmit()">
 		   	<table id = "empEditTable">
 		   		<tr>
 		   			<td>
 		   			员工编号:
 		   			</td>
 		   			<td>
-		   				<input type = "text" name="empNo" id="empNo" readonly="readonly"/>
+		   				<input type = "text" name="empNo" id="empNo" value="${emp.empNo}" readonly="readonly" />
 		   			</td>
 		   		</tr>
 		   		<tr>
@@ -166,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   			员工姓名:
 		   			</td>
 		   			<td>
-		   				<input type = "text" name="empName" id="empName"/>
+		   				<input type = "text" name="empName" value="${emp.empName}" id="empName"/>
 		   			</td>
 		   		</tr>  
 				<tr>
@@ -174,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   			所属部门:
 		   			</td>
 		   			<td>
-		   				<select name="empDept" id="empDept" style="width: 100px">
+		   				<select name="empDept" id="empDept"  style="width: 100px" onblur="refesh()">
 		   				</select>
 		   			</td>
 		   		</tr>  
@@ -185,8 +119,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   			<td>
 		   				<select name="sex" id="sex" style="width: 100px">
 			         		<option >请选择</option>
-			         		<option >男</option>
-			         		<option >女</option>
+			         		<option value="男">男</option>
+			         		<option value="女">女</option>
 		   				</select>
 		   			</td>
 		   		</tr>  
@@ -195,14 +129,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   			学历:
 		   			</td>
 		   			<td>
-		   				<select name="education" id="education" style="width: 100px">
+		   				<select name="education" id="education"   style="width: 100px">
 			         		<option >请选择</option>
-			         		<option >博士</option>
-			         		<option >研究生</option>
-			         		<option >大学</option>
-			         		<option >高中</option>
-			         		<option >初中</option>
-			         		<option >其他</option>
+							<option value="博士" >博士</option>
+							<option  value="研究生" >研究生</option>
+							<option  value="大学">大学</option>
+							<option  value="高中">高中</option>
+							<option  value="初中">初中</option>
+							<option  value="其他">其他</option>
 		   				</select>
 		   			</td>
 		   		</tr>  
@@ -211,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   			手机:
 		   			</td>
 		   			<td>
-		   				<input type = "text" name="phone" id="phone"/>
+		   				<input type = "text" name="phone" value="${emp.phone}" id="phone"/>
 		   			</td>
 		   		</tr>  
 		   		<tr>
@@ -219,7 +153,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   			入职时间:
 		   			</td>
 		   			<td>
-		   				<input type = "text" name="entryTime" id="entryTime" onclick="laydate()"/>
+		   				<input type = "text" name="entryTime" value="${emp.entryTime}" id="entryTime"  onclick="laydate()"/>
 		   			</td>
 		   		</tr>  
 		   		
@@ -228,7 +162,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   			<td colspan="2">
 		   				<input type = "submit" value="修改"/>
 		   				<input type = "button" value="重置" onclick="refresh()"/>
-						<a href="<%=basePath%>emp/emp.jsp" target="contentPage"><input type="button" value="返回"></a>
+						<a href="/njwb/emp/emp.jsp" target="contentPage"><input type="button" value="返回"></a>
 		   			</td>
 		   		</tr>  	
 		   	</table>

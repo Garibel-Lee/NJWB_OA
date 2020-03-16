@@ -99,6 +99,9 @@ public class MvcConfigParse {
 							logger.debug("result标签type属性使用默认值");
 							result.setType("dispatcher");
 						}else{
+							System.out.println(
+									type
+							);
 							result.setType(type);
 						}
 						String str =eleResult.getTextTrim();

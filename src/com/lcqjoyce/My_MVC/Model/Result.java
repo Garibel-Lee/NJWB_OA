@@ -5,7 +5,10 @@ package com.lcqjoyce.My_MVC.Model;
 public class Result {
 	private String name="success";//result的名字要唯一，默认是成功
 	private String type="dispatcher";//跳转方式,如果在标签中没有定义，默认是请求转发
+
 	private String content;//标签之间的内容（内容必须写，不写，解析时人为报错）
+
+
 	public String getType() {
 		return type;
 	}

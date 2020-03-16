@@ -1,4 +1,4 @@
-package com.lcqjoyce.dao;
+package com.lcqjoyce.service;
 
 import com.lcqjoyce.entity.Employee;
 
@@ -6,15 +6,13 @@ import java.util.List;
 
 /**
  * @author ：LCQJOYCE
- * @date ：Created in 2020/3/15 14:24
+ * @date ：Created in 2020/3/15 18:31
  * @description：
  * @version: $
  */
-public interface EmployeeDao {
-    public List<Employee> getEmployeeByDeptNo(String deptNo);
+public interface EmployeeService {
 
     List<Employee> getAllEmployees();
-
 
     List<Employee> getEmployeesPerPage(int currentPage, int size);
 

@@ -3,12 +3,15 @@ package com.lcqjoyce.web.action;
 import com.lcqjoyce.My_JDBC.Init.BeanFactory;
 import com.lcqjoyce.entity.Dept;
 import com.lcqjoyce.service.DeptService;
+import net.sf.json.JSONArray;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * @author ：LCQJOYCE
@@ -70,5 +73,21 @@ public class DeptAction {
         return "fail";
     }
 
+
+    public String deptGetall(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String resultString = "success";
+        List<Dept> depts = deptService.getAllDepts();
+        PrintWriter out;
+        try {
+            out = response.getWriter();
+            String json = JSONArray.fromObject(depts).toString();
+            out.write(json);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
 
 }
