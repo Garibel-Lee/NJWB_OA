@@ -5,6 +5,7 @@
     <bean id="menuDao" class="com.lcqjoyce.dao.impl.MenuDaoImpl"/>
     <bean id="deptDao" class="com.lcqjoyce.dao.impl.DeptDaoImpl"/>
     <bean id="employeeDao" class="com.lcqjoyce.dao.impl.EmployeeDaoImpl"/>
+    <bean id="holidayDao" class="com.lcqjoyce.dao.impl.HolidayDaoImpl"/>
     <bean id="tran" class="com.lcqjoyce.My_JDBC.Transaction.impl.TransactionImpl"/>
 
     <bean id="userService" class="com.lcqjoyce.service.impl.UserServiceImpl">
@@ -24,6 +25,15 @@
 
     <bean id="employeeService" class="com.lcqjoyce.service.impl.EmployeeServiceImpl">
         <property name="employeeDao" ref="employeeDao"/>
+        <property name="deptDao" ref="deptDao"/>
+        <property name="transaction" ref="tran" />
+    </bean>
+
+
+    <bean id="holidayService" class="com.lcqjoyce.service.impl.HolidayServiceImpl">
+        <property name="employeeDao" ref="employeeDao"/>
+        <property name="holidayDao" ref="holidayDao"/>
+        <property name="deptDao" ref="deptDao"/>
         <property name="transaction" ref="tran" />
     </bean>
 
@@ -43,4 +53,9 @@
     <bean id="empAction" class="com.lcqjoyce.web.action.EmployeeAction">
         <property name="employeeService" ref="employeeService"/>
     </bean>
+
+    <bean id="holidayAction" class="com.lcqjoyce.web.action.HolidayAction">
+        <property name="holidayService" ref="holidayService"/>
+    </bean>
+
 </beans>

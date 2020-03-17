@@ -1,8 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
-%>
+
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -130,7 +127,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   				<input type = "button" value="草稿" onclick="addHoliday('草稿')"/>
 		   				<input type = "button" value="提交" onclick="addHoliday('已提交')"/>
 		   				<input type = "button" value="重置" onclick="reset()"/>
-						<a href="/holiday.jsp" target="contentPage"><input type="button" value="返回"></a>
+						<a href="/holiday/updateHoliday.do" target="contentPage"><input type="button" value="返回"></a>
 		   			</td>
 		   		</tr>  	
 		   	</table>

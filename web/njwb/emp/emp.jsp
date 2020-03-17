@@ -1,8 +1,5 @@
-<%@ page language="java" import="com.lcqjoyce.My_JDBC.Init.BeanFactory" pageEncoding="UTF-8" %>
-<%@ page import="com.lcqjoyce.entity.Employee" %>
-<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.lcqjoyce.service.EmployeeService" %>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
     /*
     String path = request.getContextPath();
@@ -32,9 +29,8 @@
     pageContext.setAttribute("empNo", empNo);
     pageContext.setAttribute("empName", empName);*/
 %>
+<html><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
 <head>
     <base href="/">
     <title>员工管理</title>

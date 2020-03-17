@@ -16,7 +16,7 @@
             <result name="success" type="stream">
                 <![CDATA[
 			 <script type="text/javascript">
-		    	top.location.href="njwb/login.jsp";
+		    	top.location.href="/";
 		    </script>
 		    ]]></result>
         </action>
@@ -121,7 +121,7 @@
                 <![CDATA[
 			 <script type="text/javascript">
 		    	alert("部门添加成功,将跳转部门管理主页");
-                self.location.href="/njwb/emp/emp.jsp";
+                self.location.href="/emp/queryEmp.do";
 		    </script>
 		    ]]>
             </result>
@@ -130,7 +130,7 @@
                 <![CDATA[
 			 <script type="text/javascript">
 		    	alert("部门添加失败,将跳转部门管理主页");
-		    	self.location.href="/njwb/emp/emp.jsp";
+		    	self.location.href="/emp/queryEmp.do";
 		    </script>
 		    ]]>
             </result>
@@ -143,7 +143,7 @@
                 <![CDATA[
 			 <script type="text/javascript">
 		    	alert("删除成功,将跳转到员工管理主页");
-                self.location.href="/njwb/emp/emp.jsp";
+                self.location.href="/emp/queryEmp.do";
 		    </script>
 		    ]]>
             </result>
@@ -164,8 +164,8 @@
             <result type="stream" name="success">
                 <![CDATA[
 			 <script type="text/javascript">
-		    	alert("修改部门信息成功,将跳转到登录主页");
-                self.location.href="/njwb/emp/emp.jsp";
+		    	alert("修改部门信息成功,将跳转到部门主页");
+                self.location.href="/emp/queryEmp.do";
 		    </script>
 		    ]]>
             </result>
@@ -174,7 +174,7 @@
                 <![CDATA[
 			 <script type="text/javascript">
 		    	alert("修改部门信息失败,请联系服务商");
-		    	self.location.href="/njwb/emp/emp.jsp";
+		    	self.location.href="/emp/queryEmp.do";
 		    </script>
 		    ]]>
             </result>
@@ -184,4 +184,47 @@
             <result type="dispatcher" name="success">/njwb/emp/emp.jsp</result>
         </action>
     </package>
+
+
+    <package name="holiday" namespace="holiday">
+
+        <action name="updateHoliday" method="updateHoliday" class="holidayAction">
+            <result type="stream" name="success">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("修改假期信息成功,将跳转到部门主页");
+                location.href="/holiday/queryHoliday.do";
+		    </script>
+		    ]]>
+            </result>
+        </action>
+        <action name="addHoliday" method="addHoliday" class="holidayAction">
+            <result type="stream" name="success">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("添加假期信息成功,将跳转到假期主页");
+                location.href="/holiday/queryHoliday.do";
+		    </script>
+		    ]]>
+            </result>
+        </action>
+
+
+        <action name="deleteHoliday" method="deleteHoliday" class="holidayAction">
+            <result type="stream" name="success">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("删除假期信息成功,将跳转到假期管理主页");
+                location.href="/holiday/queryHoliday.do";
+		    </script>
+		    ]]>
+            </result>
+        </action>
+
+        <action name="queryHoliday" method="queryHoliday" class="holidayAction">
+            <result type="dispatcher" name="success">/njwb/holiday/holiday.jsp</result>
+        </action>
+    </package>
+
+
 </mvc>

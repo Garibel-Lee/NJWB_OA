@@ -143,7 +143,7 @@
   </head>
 
   <body>
-  	<form action="login.do" method="post"  onsubmit="return checkBeforeSubmit()">
+  	<form action="/login.do" method="post"  onsubmit="return checkBeforeSubmit()">
      <div id = "login">
      	  <div id = "title">
      	  		NJWB管理系统

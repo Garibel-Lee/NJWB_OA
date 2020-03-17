@@ -10,7 +10,7 @@ import org.junit.Test;
  * @description：
  * @version: $
  */
-public class empService {
+public class empServiceTest {
     @Test
     public void test(){
         EmployeeService service = (EmployeeService) BeanFactory.getObject("employeeService");

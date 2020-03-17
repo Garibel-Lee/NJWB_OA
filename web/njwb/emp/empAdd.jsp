@@ -185,7 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   			<td colspan="2">
 	   				<input type = "submit" value="添加"/>
 	   				<input type = "reset" value="重置"/>
-					<a href="//njwb/emp/emp.jsp" target="contentPage"><input type="button" value="返回"></a>
+					<a href="emp/queryEmp.do" target="contentPage"><input type="button" value="返回"></a>
 	   			</td>
 	   		</tr>  	
 	   	</table>

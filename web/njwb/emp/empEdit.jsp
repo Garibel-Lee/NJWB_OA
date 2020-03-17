@@ -162,7 +162,7 @@ String empNo=(String) request.getParameter("empNo");
 		   			<td colspan="2">
 		   				<input type = "submit" value="修改"/>
 		   				<input type = "button" value="重置" onclick="refresh()"/>
-						<a href="/njwb/emp/emp.jsp" target="contentPage"><input type="button" value="返回"></a>
+						<a href="emp/queryEmp.do" target="contentPage"><input type="button" value="返回"></a>
 		   			</td>
 		   		</tr>  	
 		   	</table>

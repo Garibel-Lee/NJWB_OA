@@ -38,35 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 	</style>
 	<script type="text/javascript">
-		$(document).ready(function(){
-			refresh();
-  		});
-		function refresh(){
-			var holidayNo = $("#hiddenInput").val();
-			$.ajax({
-			   type : "POST",
-			   url: "/holiday/getHolidayByHolidayNo.do",
-			   data: {"holidayNo":holidayNo},
-			   success: function(msg){
-				  var holiday = $.parseJSON(msg);
-				  var applyName = holiday.holidayUser;
-				  var holidayType = holiday.holidayType;
-				  var holidayCause = holiday.holidayCause;
-				  var startDate = holiday.holidayStartTime;
-				  var startTime = (startDate.year+1900)+"-"+(startDate.month+1)+"-"+(startDate.date);
-				  var endDate = holiday.holidayEndTime;
-				  var endTime = (endDate.year+1900)+"-"+(endDate.month+1)+"-"+(endDate.date);
-				  var holidayStatus = holiday.holidayStatus;
-				  $("#holidayNo").html(holidayNo);
-				  $("#applyName").html(applyName);
-				  $("#holidayType").html(holidayType);
-				  $("#holidayCause").html(holidayCause);
-				  $("#startTime").html(startTime);
-				  $("#endTime").html(endTime);
-				  $("#holidayStatus").html(holidayStatus);
-				 }
-			 });
-		}
+
 	</script>
   </head>
   
@@ -102,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	</li>
     </ul>
     <div id="back">
-		<a href="/holiday/holiday.jsp" target="contentPage"><input type="button" value="返回"></a>
+		<a href="/holiday/updateHoliday.do" target="contentPage"><input type="button" value="返回"></a>
 	</div>
     <input type="hidden" value="${holidayNo}" id="hiddenInput">
   </body>
