@@ -2,6 +2,7 @@ package com.lcqjoyce.service;
 
 import com.lcqjoyce.My_JDBC.Init.BeanFactory;
 import com.lcqjoyce.entity.Dept;
+import com.lcqjoyce.util.page.PageResult;
 import org.junit.Test;
 
 import java.util.List;
@@ -26,5 +27,11 @@ public class DeptDaoService {
         DeptService service=(DeptService) BeanFactory.getObject("deptService");
        Dept lists=service.getByDeptNo("A0001");
         System.out.println(lists.toString());
+    }
+    @Test
+    public void aest() {
+        PermissionsService permissionsService=(PermissionsService)BeanFactory.getObject("permissionsService");
+        PageResult permissionsResult = permissionsService.getPermissionsWithConditionByPage(null, null,1);
+        System.out.println(permissionsResult.getListData());
     }
 }

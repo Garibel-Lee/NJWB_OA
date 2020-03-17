@@ -43,4 +43,16 @@ public class MenuDaoImpl implements MenuDao {
         }
         return menuResult;
     }
+
+    @Override
+    public List<Menu> getallMenus() {
+        List<Menu> results = null;
+        logger.debug("在RoleDaoImpl类中，调用getAllroles方法");
+        String sql = "SELECT\n" +
+                "* FROM\n" +
+                "t_menu";
+        Object[] objects = {};
+        results = JdbcTemplate.executeQuery(sql, new MenuMapper(), objects);
+        return results;
+    }
 }

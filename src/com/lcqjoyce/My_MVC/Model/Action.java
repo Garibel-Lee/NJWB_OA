@@ -42,7 +42,7 @@ public class Action {
 //}
 	@Override
 	public String toString() {
-		return "Action [name=" + name + ", method=" + method + ", results=" + results + "]";
+		return " \nAction [name=" + name + ", method=" + method + ", results=" + results + "]";
 	}
 	
 	

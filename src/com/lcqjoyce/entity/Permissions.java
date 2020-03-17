@@ -19,8 +19,10 @@ public class Permissions  {
     private Integer id;
 
     private Integer roleId;
+    private Role role;
 
     private Integer menuId;
+    private Menu menu;
 
     private LocalDate createTime;
 

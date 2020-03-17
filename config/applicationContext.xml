@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans>
     <bean id="userDao" class="com.lcqjoyce.dao.impl.UserDaoImpl"/>
-    <bean id="permissionsDao" class="com.lcqjoyce.dao.impl.PermissionsDaoImpl"/>
+
     <bean id="menuDao" class="com.lcqjoyce.dao.impl.MenuDaoImpl"/>
     <bean id="deptDao" class="com.lcqjoyce.dao.impl.DeptDaoImpl"/>
     <bean id="employeeDao" class="com.lcqjoyce.dao.impl.EmployeeDaoImpl"/>
     <bean id="holidayDao" class="com.lcqjoyce.dao.impl.HolidayDaoImpl"/>
+    <bean id="roleDao" class="com.lcqjoyce.dao.impl.RoleDaoImpl"/>
+    <bean id="permissionsDao" class="com.lcqjoyce.dao.impl.PermissionsDaoImpl"/>
+    <bean id="menuDao" class="com.lcqjoyce.dao.impl.MenuDaoImpl"/>
     <bean id="tran" class="com.lcqjoyce.My_JDBC.Transaction.impl.TransactionImpl"/>
 
     <bean id="userService" class="com.lcqjoyce.service.impl.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
     </bean>
 
-    <bean id="permissionsService" class="com.lcqjoyce.service.impl.PermissionsServiceImpl">
-        <property name="permissionsDao" ref="permissionsDao"/>
-        <property name="menuDao" ref="menuDao"/>
-    </bean>
 
     <bean id="deptService" class="com.lcqjoyce.service.impl.DeptServiceImpl">
         <property name="deptDao" ref="deptDao"/>
         <property name="employeeDao" ref="employeeDao"/>
-		<property name="transaction" ref="tran" />
+        <property name="transaction" ref="tran"/>
     </bean>
 
     <bean id="employeeService" class="com.lcqjoyce.service.impl.EmployeeServiceImpl">
         <property name="employeeDao" ref="employeeDao"/>
         <property name="deptDao" ref="deptDao"/>
-        <property name="transaction" ref="tran" />
+        <property name="transaction" ref="tran"/>
     </bean>
 
 
@@ -34,9 +33,24 @@
         <property name="employeeDao" ref="employeeDao"/>
         <property name="holidayDao" ref="holidayDao"/>
         <property name="deptDao" ref="deptDao"/>
-        <property name="transaction" ref="tran" />
+        <property name="transaction" ref="tran"/>
     </bean>
 
+    <bean id="roleService" class="com.lcqjoyce.service.impl.RoleServiceImpl">
+        <property name="roleDao" ref="roleDao"/>
+        <property name="transaction" ref="tran"/>
+    </bean>
+    <bean id="menuService" class="com.lcqjoyce.service.impl.MenuServiceImpl">
+        <property name="menuDao" ref="menuDao"/>
+        <property name="transaction" ref="tran"/>
+    </bean>
+
+    <bean id="permissionsService" class="com.lcqjoyce.service.impl.PermissionsServiceImpl">
+        <property name="permissionsDao" ref="permissionsDao"/>
+        <property name="menuDao" ref="menuDao"/>
+        <property name="roleDao" ref="roleDao"/>
+        <property name="transaction" ref="tran"/>
+    </bean>
 
     <bean id="userAction" class="com.lcqjoyce.web.action.UserAction">
         <property name="userService" ref="userService"/>
@@ -57,5 +71,13 @@
     <bean id="holidayAction" class="com.lcqjoyce.web.action.HolidayAction">
         <property name="holidayService" ref="holidayService"/>
     </bean>
+
+
+    <bean id="permissionsAction" class="com.lcqjoyce.web.action.PermissionsAction">
+        <property name="permissionsService" ref="permissionsService"/>
+        <property name="roleService" ref="roleService"/>
+        <property name="menuService" ref="menuService"/>
+    </bean>
+
 
 </beans>

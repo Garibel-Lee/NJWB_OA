@@ -25,7 +25,7 @@
             width: 780px;
             margin-left: 10px;
             margin-top: 20px;
-            border: 1px;
+
         }
 
         td {
@@ -52,7 +52,7 @@
 </div>
 
 <form action="/holiday/queryHoliday.do" method="post">
-    <div style="margin-top: 50px;width: 750px;margin-left: 50px;">
+    <div style="margin-top: 50px;width: 750px;margin-left: 50px; border: 1px; ">
         申请人：<input type="text" id="empName" name="empName" style="width: 100px;margin-right: 20px;">
         请假类型：<select id="holidayType" name="holidayType" style="width: 100px;margin-right: 20px;">
         <option value="">请选择</option>

@@ -15,10 +15,15 @@
                      标签与标签之间，可以是jsp文件，也可以是字符串，也可以是script代码  ，一个action中有多个Result-->
             <result name="success" type="stream">
                 <![CDATA[
-			 <script type="text/javascript">
-		    	top.location.href="/";
-		    </script>
-		    ]]></result>
+                     <script type="text/javascript">
+
+                     var result = confirm('是否退出系统！');
+                        if(result){
+                           top.location.href="/";
+                        }
+                    </script>
+                    ]]>
+            </result>
         </action>
 
 
@@ -223,6 +228,24 @@
 
         <action name="queryHoliday" method="queryHoliday" class="holidayAction">
             <result type="dispatcher" name="success">/njwb/holiday/holiday.jsp</result>
+        </action>
+    </package>
+
+
+
+    <package name="permissions" namespace="permissions">
+        <action name="getAllRoleName" method="getAllRoleName" class="permissionsAction">
+            <result type="ajax" name="success">
+                <![CDATA[2B]]>
+            </result>
+        </action>
+        <action name="getAllMenu" method="getAllMenu" class="permissionsAction">
+            <result type="ajax" name="success">
+                <![CDATA[2B]]>
+            </result>
+        </action>
+        <action name="queryPermissions" method="queryPermissions" class="permissionsAction">
+            <result type="dispatcher" name="success">/njwb/permissions/permissions.jsp</result>
         </action>
     </package>
 
