@@ -3,8 +3,8 @@ package com.lcqjoyce.dao.impl;
 import com.lcqjoyce.My_JDBC.Handle.JdbcTemplate;
 import com.lcqjoyce.My_JDBC.Handle.RowMapper;
 import com.lcqjoyce.dao.PermissionsDao;
+import com.lcqjoyce.dao.mapper.MenuMapper;
 import com.lcqjoyce.dao.mapper.PermissionMapper;
-import com.lcqjoyce.dao.mapper.PermissionsMapper;
 import com.lcqjoyce.entity.Menu;
 import com.lcqjoyce.entity.Permissions;
 import org.apache.log4j.Logger;
@@ -41,7 +41,7 @@ public class PermissionsDaoImpl implements PermissionsDao {
                 "WHERE\n" +
                 "t_permissions.t_role_id = ?";
         Object[] objects = {role};
-        results = JdbcTemplate.executeQuery(sql, new PermissionsMapper(), objects);
+        results = JdbcTemplate.executeQuery(sql, new MenuMapper(), objects);
         if (null != results && results.size() == 1) {
             Menu menu = results.get(0);
         }
@@ -82,18 +82,39 @@ public class PermissionsDaoImpl implements PermissionsDao {
         return result;
     }
 
+    /**
+     "SELECT\n" +
+     "t_permissions.t_role_id,\n" +
+     "t_permissions.t_menu_id,\n" +
+     "t_role.t_role_name AS r_role_name,\n" +
+     "t_menu.t_menu_name AS m_menu_name\n" +
+     "FROM\n" +
+     "t_permissions\n" +
+     "LEFT JOIN t_menu ON t_permissions.t_menu_id = t_menu.t_id\n" +
+     "LEFT JOIN t_role ON t_permissions.t_role_id = t_role.t_id\n" +
+     "WHERE\n" +
+     "t_permissions.t_menu_id = 4 AND\n" +
+     "t_permissions.t_role_id = 1"
+     */
     @Override
     public List<Permissions> queryByPage(String roleId, String menuId, Integer currentPage, Integer pageSize) {
         StringBuffer sql = new StringBuffer("SELECT\n" +
-
-                "* FROM\n" +
+                "t_permissions.t_role_id,\n" +
+                "t_permissions.t_menu_id,\n" +
+                "t_permissions.t_id,\n" +
+                "t_permissions.t_create_time,\n" +
+                "t_role.t_role_name AS r_role_name,\n" +
+                "t_menu.t_menu_name AS m_menu_name\n" +
+                "FROM\n" +
                 "t_permissions\n" +
-                "where 1=1  ");
+                "LEFT JOIN t_menu ON t_permissions.t_menu_id = t_menu.t_id\n" +
+                "LEFT JOIN t_role ON t_permissions.t_role_id = t_role.t_id\n" +
+                "WHERE 1=1 ");
         if (!(roleId == null || "".equals(roleId))) {
-            sql.append(" and t_role_id=" + roleId );
+            sql.append(" and t_permissions.t_role_id=" + roleId );
         }
         if (!(menuId == null || "".equals(menuId))) {
-            sql.append(" and t_menu_id=" +menuId);
+            sql.append(" and t_permissions.t_menu_id=" +menuId);
         }
 
 

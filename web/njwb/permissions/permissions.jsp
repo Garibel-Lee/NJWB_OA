@@ -27,7 +27,7 @@
                 url: "/permissions/getAllRoleName.do",
                 success: function (msg) {
                     var roles = $.parseJSON(msg);
-                    var roleName = $("#roleName");
+                    var roleName = $("#roleId");
                     for (var i = 0; i < roles.length; i++) {
                         var option = $("<option value=" + roles[i].id + ">" + roles[i].roleName + "</option>");
                         roleName.append(option);
@@ -42,10 +42,12 @@
                 url: "/permissions/getAllMenu.do",
                 success: function (msg) {
                     var menus = $.parseJSON(msg);
-                    var menuName = $("#menuName");
+                    var menuName = $("#menuId");
                     for (var i = 0; i < menus.length; i++) {
-                        var option = $("<option>" + menus[i].menuName + "</option>");
+                        if( menus[i].id>3){
+                        var option = $("<option value=" + menus[i].id + ">" + menus[i].menuName + "</option>");
                         menuName.append(option);
+                    }
                     }
                 }
             });
@@ -78,18 +80,20 @@
 <h1 class="title">首页 &gt;&gt;权限管理 </h1>
 
 <div class="add">
-    <a href="/permissions/perAdd.jsp" target="contentPage"><img src="img/add.png" width="18px" height="18px">添加权限</a>
+    <a href="/njwb/permissions/perAdd.jsp" target="contentPage"><img src="img/add.png" width="18px" height="18px">添加权限</a>
 </div>
 <div style="margin-top: 50px;width: 750px;margin-left: 100px;">
+    <form action="/permissions/queryPermissions.do" method="post">
     &nbsp;&nbsp;&nbsp;&nbsp;角色：
-    <select id="roleName" style="width: 100px;margin-left: 10px;">
-        <option>请选择</option>
+    <select id="roleId" name="roleId" style="width: 100px;margin-left: 10px;">
+        <option VALUE="">请选择</option>
     </select>
     &nbsp;&nbsp;&nbsp;&nbsp;菜单：
-    <select id="menuName" style="width: 100px;margin-left: 10px;">
-        <option>请选择</option>
+    <select id="menuId" name="menuId"  style="width: 100px;margin-left: 10px;">
+        <option value="">请选择</option>
     </select>
-    <input type="button" value="查询" onclick="search(1)" style="width: 50px;margin-left: 30px;">
+    <input type="submit" value="查询" style="width: 50px;margin-left: 30px;">
+    </form>
 </div>
 <table class="deptInfo">
     <tr class="titleRow">
@@ -100,31 +104,54 @@
     <tbody>
     <c:forEach var="permissions" items="${permissionsResult.listData}">
         <tr>
-                <%--<td>${roleMap[permissions.roleId]}</td>
-                <td>${menuMap[permissions.menuId]}</td>--%>
-            <c:set var="temp" value="${permissions.roleId+''}"/>
             <td>
                     ${permissions.role.roleName}
             </td>
-            <c:set var="val" value="${permissions.menuId+''}"/>
             <td>
-                    ${menuMap[val]}
+                    ${permissions.menu.menuName}
             </td>
             <td>
-                <img id=${holiday.holidayNo} alt="删除" src="/img/delete.png" class="operateImg" onclick="del(id)">
-                <a href="/njwb/holiday/edit.jsp?holidayNo=${holiday.holidayNo}" target="contentPage"><img alt=""
+                <img id=${permissions.id} alt="删除" src="/img/delete.png" class="operateImg" onclick="del(id)">
+                <a href="/njwb/permissions/perEdit.jsp?permissionsId=${permissions.id}" target="contentPage"><img alt=""
                                                                                                           src="/img/edit.png"
                                                                                                           class="operateImg"></a>
-                <a href="/njwb/holiday/detail.jsp?holidayNo=${holiday.holidayNo}" target="contentPage"><img alt=""
-                                                                                                            src="/img/detail.png"
-                                                                                                            class="operateImg"></a>
             </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
-<div style="width: 500px; margin-left: 150px;margin-top: 10px;">
-
+<div style="width: 500px; margin-left: 260px;margin-top: 10px;">
+    <a href="/permissions/queryPermissions.do?roleId=${roleId}&menuId=${menuId}&currentPage=1" target="contentPage">首页</a> &nbsp;
+    <c:if test="${permissionsResult.currentPage==1}" var="pre">
+        <a href="/permissions/queryPermissions.do?roleId=${roleId}&menuId=${menuId}&currentPage=1">上一页</a> &nbsp;
+    </c:if>
+    <c:if test="${ ! pre }">
+        <a href="/permissions/queryPermissions.do?roleId=${roleId}&menuId=${menuId}&currentPage=${permissionsResult.currentPage-1}"
+           target="contentPage">上一页</a> &nbsp;
+    </c:if>
+    <c:forEach begin="${permissionsIndex.beginIndex}" end="${permissionsIndex.endIndex}" var="index">
+        <c:choose>
+            <c:when test="${permissionsResult.currentPage} == ${index}">
+                <a id="middleIndex" href="/permissions/queryPermissions.do?roleId=${roleId}&menuId=${menuId}&currentPage=${index}"
+                   target="contentPage">${index}</a>
+            </c:when>
+            <c:otherwise>
+                <a href="/permissions/queryPermissions.do?roleId=${roleId}&menuId=${menuId}&currentPage=${index}"
+                   target="contentPage">${index}</a>&nbsp;
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <c:if test="${permissionsResult.currentPage==permissionsResult.totalPage}" var="next">
+        <a href="/permissions/queryPermissions.do?roleId=${roleId}&menuId=${menuId}&currentPage=${permissionsResult.totalPage}"
+           target="contentPage">下一页</a>&nbsp;
+    </c:if>
+    <c:if test="${ ! next }">
+        <a href="/permissions/queryPermissions.do?roleId=${roleId}&menuId=${menuId}&currentPage=${permissionsResult.currentPage+1}"
+           target="contentPage">下一页</a>&nbsp;
+    </c:if>
+    <a href="/permissions/queryPermissions.do?roleId=${roleId}&menuId=${menuId}&currentPage=${permissionsResult.totalPage}"
+       target="contentPage">末       页</a><br/>
+    &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;一共${permissionsResult.totalPage}页,一共${permissionsResult.totalCount}条
 </div>
 </body>
 </html>

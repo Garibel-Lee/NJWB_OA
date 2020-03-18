@@ -18,7 +18,7 @@ import java.util.List;
  * @version: $
  */
 public class EmployeeMapper implements RowMapper {
-    private static Logger logger = Logger.getLogger(PermissionsMapper.class);
+    private static Logger logger = Logger.getLogger(EmployeeMapper.class);
 
     public List<Employee> mapperList(ResultSet rs) throws SQLException {
         logger.debug("获得t_employee表中数据，这是t_employee表与Employee类的映射");

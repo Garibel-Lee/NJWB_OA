@@ -88,8 +88,8 @@ public class PermissionsServiceImpl implements PermissionsService {
     public PageResult getPermissionsWithConditionByPage(String roleId, String menuId, Integer currentPage) {
         int count = permissionsDao.queryForCount(roleId, menuId);
         if (count > 0) {
-            List<Permissions> holidays = permissionsDao.queryByPage(roleId, menuId, currentPage, 4);
-            return new PageResult(holidays, count, Integer.valueOf(currentPage), 4);
+            List<Permissions> permissions = permissionsDao.queryByPage(roleId, menuId, currentPage, 4);
+            return new PageResult(permissions, count, Integer.valueOf(currentPage), 4);
         }
         return PageResult.empty(4);
     }

@@ -99,7 +99,7 @@ public class HolidayDaoImpl implements HolidayDao {
     @Override
     public Integer queryForCount(String empName, String holidayType, String holidayStatus) {
         StringBuffer sql = new StringBuffer();
-        sql.append("select count(t_id) from t_holiday  where 1=1 ");
+        sql.append("select count(id) from t_holiday  where 1=1 ");
         if (!(empName == null || "".equals(empName))) {
             sql.append(" and t_holiday_user like  '%" + empName + "%'");
         }

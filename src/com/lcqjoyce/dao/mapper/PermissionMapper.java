@@ -1,7 +1,9 @@
 package com.lcqjoyce.dao.mapper;
 
 import com.lcqjoyce.My_JDBC.Handle.RowMapper;
+import com.lcqjoyce.entity.Menu;
 import com.lcqjoyce.entity.Permissions;
+import com.lcqjoyce.entity.Role;
 import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
@@ -26,10 +28,15 @@ public class PermissionMapper implements RowMapper {
         while(rs.next()){
             System.out.println("rs不为空");
             Permissions permissions = new Permissions();
+            Role role = new Role();
+            Menu menu = new Menu();
             permissions.setId(rs.getInt("t_id"));
-            permissions.setMenuId(Integer.valueOf(rs.getString("t_menu_id")));
-            permissions.setRoleId(Integer.valueOf(rs.getString("t_role_id")));
-
+            role.setId(rs.getInt("t_role_id"));
+            role.setRoleName(rs.getString("r_role_name"));
+            menu.setId(rs.getInt("t_menu_id"));
+            menu.setMenuName(rs.getString("m_menu_name"));
+            permissions.setRole(role);
+            permissions.setMenu(menu);
             try {
                 permissions.setCreateTime(LocalDate.parse(rs.getString("t_create_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
             } catch (NullPointerException e2){

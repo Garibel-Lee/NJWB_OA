@@ -18,7 +18,7 @@ import java.util.List;
  * @version: $
  */
 public class MenuMapper implements RowMapper {
-    private static Logger logger = Logger.getLogger(PermissionsMapper.class);
+    private static Logger logger = Logger.getLogger(MenuMapper.class);
     public List<Menu> mapperList(ResultSet rs) throws SQLException {
         logger.debug("获得MenusMapper映射");
         List<Menu> list = new ArrayList<Menu>();

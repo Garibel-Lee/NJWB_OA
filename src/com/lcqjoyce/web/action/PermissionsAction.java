@@ -16,8 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author ：LCQJOYCE
@@ -82,18 +80,6 @@ public class PermissionsAction {
     public String queryPermissions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String roleId = request.getParameter("roleId");
         String menuId = request.getParameter("menuId");
-        List<Menu> menus = menuService.getallMenus();
-        List<Role> roles = roleService.getAllroles();
-        Map<String, String> menuMap = new ConcurrentHashMap<>();
-        Map<String, String> roleMap = new ConcurrentHashMap<>();
-        for (Menu menu :
-                menus) {
-            menuMap.put(menu.getId().toString(),menu.getMenuName());
-        }
-        for (Role role :
-                roles) {
-            roleMap.put(role.getId().toString(),role.getRoleName());
-        }
 
         Integer currentPage = 1;
         if (null != request.getParameter("currentPage") && !"".equals(request.getParameter("currentPage"))) {
@@ -105,11 +91,9 @@ public class PermissionsAction {
         logger.info(permissionsResult.getListData());
         request.setAttribute("permissionsResult",permissionsResult);
         request.setAttribute("permissionsIndex",permissionsIndex);
-/*        request.setAttribute("empName",empName);
-        request.setAttribute("holidayType",holidayType);
-        request.setAttribute("holidayStatus",holidayStatus);*/
-        request.setAttribute("menuMap",menuMap);
-        request.setAttribute("roleMap",roleMap);
+        request.setAttribute("roleId",roleId);
+        request.setAttribute("menuId",menuId);
+
         return "success";
     }
 
