@@ -1,6 +1,8 @@
 package com.lcqjoyce.web.action;
 
+import com.lcqjoyce.My_JDBC.Init.BeanFactory;
 import com.lcqjoyce.entity.Menu;
+import com.lcqjoyce.entity.Permissions;
 import com.lcqjoyce.entity.Role;
 import com.lcqjoyce.service.MenuService;
 import com.lcqjoyce.service.PermissionsService;
@@ -96,5 +98,23 @@ public class PermissionsAction {
 
         return "success";
     }
+
+    public String addPermissions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String resultString = "success";
+        Permissions permissions = new Permissions();
+        Role role = new Role();
+        Menu menu = new Menu();
+        role.setId(Integer.valueOf(request.getParameter("roleId")));
+        menu.setId(Integer.valueOf(request.getParameter("menuId")));
+        permissions.setRole(role);
+        permissions.setMenu(menu);
+        logger.info(permissions.toString());
+        PermissionsService service=(PermissionsService) BeanFactory.getObject("permissionsService");
+        if(service.addPermissions(permissions)==1)
+            return resultString;
+
+        return "fail";
+    }
+
 
 }

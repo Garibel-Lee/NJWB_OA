@@ -90,7 +90,7 @@
     <c:forEach var="dept" items="${some}">
         <tr>
             <td>${dept.deptNo}</td>
-            <td>${dept.deptName }</td>
+            <td>${dept.deptName}</td>
             <td>${dept.deptLoc}</td>
             <td>${dept.deptManager}</td>
             <td>

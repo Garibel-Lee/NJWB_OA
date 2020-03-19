@@ -56,12 +56,13 @@
         <property name="userService" ref="userService"/>
     </bean>
 
-    <bean id="ajaxAction" class="com.lcqjoyce.web.action.AjaxAction">
-        <property name="userService" ref="userService"/>
-    </bean>
+    <!--    <bean id="ajaxAction" class="com.lcqjoyce.web.action.AjaxAction">
+            <property name="userService" ref="userService"/>
+        </bean>-->
 
     <bean id="deptAction" class="com.lcqjoyce.web.action.DeptAction">
         <property name="deptService" ref="deptService"/>
+        <property name="employeeService" ref="employeeService"/>
     </bean>
 
     <bean id="empAction" class="com.lcqjoyce.web.action.EmployeeAction">
@@ -70,6 +71,7 @@
 
     <bean id="holidayAction" class="com.lcqjoyce.web.action.HolidayAction">
         <property name="holidayService" ref="holidayService"/>
+        <property name="employeeService" ref="employeeService"/>
     </bean>
 
 
@@ -79,5 +81,9 @@
         <property name="menuService" ref="menuService"/>
     </bean>
 
+    <bean id="roleAction" class="com.lcqjoyce.web.action.RoleAction">
+        <property name="roleService" ref="roleService"/>
+        <property name="userService" ref="userService"/>
+    </bean>
 
 </beans>

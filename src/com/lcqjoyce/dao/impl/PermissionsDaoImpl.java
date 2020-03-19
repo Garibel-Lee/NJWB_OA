@@ -56,7 +56,7 @@ public class PermissionsDaoImpl implements PermissionsDao {
             sql.append(" and t_role_id=" + roleId);
         }
         if (!(menuId == null || "".equals(menuId))) {
-            sql.append(" and t_menu_id=" +menuId);
+            sql.append(" and t_menu_id=" + menuId);
         }
 
 
@@ -83,18 +83,18 @@ public class PermissionsDaoImpl implements PermissionsDao {
     }
 
     /**
-     "SELECT\n" +
-     "t_permissions.t_role_id,\n" +
-     "t_permissions.t_menu_id,\n" +
-     "t_role.t_role_name AS r_role_name,\n" +
-     "t_menu.t_menu_name AS m_menu_name\n" +
-     "FROM\n" +
-     "t_permissions\n" +
-     "LEFT JOIN t_menu ON t_permissions.t_menu_id = t_menu.t_id\n" +
-     "LEFT JOIN t_role ON t_permissions.t_role_id = t_role.t_id\n" +
-     "WHERE\n" +
-     "t_permissions.t_menu_id = 4 AND\n" +
-     "t_permissions.t_role_id = 1"
+     * "SELECT\n" +
+     * "t_permissions.t_role_id,\n" +
+     * "t_permissions.t_menu_id,\n" +
+     * "t_role.t_role_name AS r_role_name,\n" +
+     * "t_menu.t_menu_name AS m_menu_name\n" +
+     * "FROM\n" +
+     * "t_permissions\n" +
+     * "LEFT JOIN t_menu ON t_permissions.t_menu_id = t_menu.t_id\n" +
+     * "LEFT JOIN t_role ON t_permissions.t_role_id = t_role.t_id\n" +
+     * "WHERE\n" +
+     * "t_permissions.t_menu_id = 4 AND\n" +
+     * "t_permissions.t_role_id = 1"
      */
     @Override
     public List<Permissions> queryByPage(String roleId, String menuId, Integer currentPage, Integer pageSize) {
@@ -111,10 +111,10 @@ public class PermissionsDaoImpl implements PermissionsDao {
                 "LEFT JOIN t_role ON t_permissions.t_role_id = t_role.t_id\n" +
                 "WHERE 1=1 ");
         if (!(roleId == null || "".equals(roleId))) {
-            sql.append(" and t_permissions.t_role_id=" + roleId );
+            sql.append(" and t_permissions.t_role_id=" + roleId);
         }
         if (!(menuId == null || "".equals(menuId))) {
-            sql.append(" and t_permissions.t_menu_id=" +menuId);
+            sql.append(" and t_permissions.t_menu_id=" + menuId);
         }
 
 
@@ -134,5 +134,22 @@ public class PermissionsDaoImpl implements PermissionsDao {
         //String sql="select * from t_mood LIMIT ?,?";
         //String[] objs= {begin+"",size+""};
         return JdbcTemplate.executeQuery(sql, new PermissionMapper(), null);
+    }
+
+    @Override
+    public int addPermissions(Permissions permissions) {
+        int count = 0;
+        logger.debug("在PermissionsDaoImpl类中，addPermissions");
+
+        String sql = "INSERT INTO `njwb_oa`.`t_permissions`( `t_role_id`, `t_menu_id`, `t_create_time`) VALUES (?, ?, now());";
+
+        String[] objects = {permissions.getRole().getId().toString(), permissions.getMenu().getId().toString()};
+        try {
+            count = JdbcTemplate.executeUpdate(sql, objects);
+            logger.info("在PermissionsDaoImpl类中执行insert返回结果是：" + count);
+        } catch (SQLException e) {
+            logger.error(count);
+        }
+        return count;
     }
 }

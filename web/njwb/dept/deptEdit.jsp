@@ -1,10 +1,14 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8" %>
+<%@ page language="java" import="com.lcqjoyce.My_JDBC.Init.BeanFactory" pageEncoding="UTF-8" %>
+<%@ page import="com.lcqjoyce.entity.Dept" %>
+<%@ page import="com.lcqjoyce.service.DeptService" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+    DeptService service=(DeptService) BeanFactory.getObject("deptService");
     String deptNo = request.getParameter("deptNo");
-    request.setAttribute("deptNo", deptNo);
+    Dept dept=service.getByDeptNo(deptNo);
+    request.setAttribute("dept", dept);
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -77,7 +81,7 @@
                 部门编号:
             </td>
             <td>
-                <input type="text" name="deptNo" id="deptNo" value=${deptNo} readonly="readonly"/>
+                <input type="text" name="deptNo" id="deptNo" value=${dept.deptNo} readonly="readonly"/>
             </td>
         </tr>
         <tr>
@@ -85,7 +89,7 @@
                 部门名称:
             </td>
             <td>
-                <input type="text" name="deptName" id="deptName"/>
+                <input type="text" name="deptName" value="${dept.deptName}" id="deptName"/>
             </td>
         </tr>
 
@@ -94,7 +98,7 @@
                 部门位置:
             </td>
             <td>
-                <input type="text" name="deptLocation" id="deptLocation"/>
+                <input type="text" name="deptLocation" value="${dept.deptLoc}" id="deptLocation"/>
             </td>
         </tr>
 
@@ -103,7 +107,7 @@
                 部门负责人:
             </td>
             <td>
-                <input type="text" name="deptManager" id="deptManager"/>
+                <input type="text" name="deptManager"   value="${dept.deptManager}" id="deptManager"/>
             </td>
         </tr>
 

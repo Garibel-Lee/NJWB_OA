@@ -97,8 +97,16 @@
                 alert("结束时间不能为空");
                 return false;
             }
+            var gnl = confirm("确定要提交?提交之后无法修改哦");
+            if (gnl == true) {
+                return true;
+            } else {
+                return false;
+            }
             return true;
         }
+
+
     </script>
 </head>
 
@@ -170,8 +178,8 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" value="修改" id="updateInput"/>
-                    <input type="button" value="重置" onclick="refresh()"/>
+                    <input type="submit" value="提交" onclick="sumbit()" id="updateInput"/>
+                    <a href="/njwb/holiday/edit.jsp?holidayNo=${holiday.holidayNo}" target="contentPage"><input type="button" value="重置" /></a>
                     <a href="holiday/queryHoliday.do" target="contentPage"><input type="button" value="返回"></a>
                 </td>
             </tr>

@@ -59,6 +59,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         return PageResult.empty(4);
     }
 
+    @Override
+    public int getEmployeeByName(String deptManager) {
+        return employeeDao.getEmployeeByName(deptManager);
+    }
+
+    @Override
+    public int getEmployeeByNameAndDeptNo(String deptManager, String deptNo) {
+        return employeeDao.getEmployeeByNameAndDeptNo(deptManager,deptNo);
+    }
+
     /*
     		int count = flightDao.queryForCount(qo);
 		if(count > 0) {

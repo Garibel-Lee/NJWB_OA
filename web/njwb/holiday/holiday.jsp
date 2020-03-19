@@ -97,13 +97,17 @@
             <td>${holiday.startTime}</td>
             <td>${holiday.endTime}</td>
             <td>
-                    ${holiday.holidayStatus eq 1 ? "已提交" :"草稿"} </td>
+               ${holiday.holidayStatus eq 1 ? "已提交" :"草稿"} </td>
             <td>${holiday.createTime}</td>
             <td>
-                <img id=${holiday.holidayNo} alt="删除" src="/img/delete.png" class="operateImg" onclick="del(id)">
-                <a href="/njwb/holiday/edit.jsp?holidayNo=${holiday.holidayNo}" target="contentPage"><img alt=""
-                                                                                                          src="/img/edit.png"
-                                                                                                          class="operateImg"></a>
+                <c:if test="${holiday.holidayStatus eq 0}">
+                    <img id=${holiday.holidayNo} alt="删除" src="/img/delete.png" class="operateImg" onclick="del(id)">
+                </c:if>
+                <c:if test="${holiday.holidayStatus eq 0}">
+                    <a href="/njwb/holiday/edit.jsp?holidayNo=${holiday.holidayNo}" target="contentPage"><img alt=""
+                                                                                                              src="/img/edit.png"
+                                                                                                              class="operateImg"></a>
+                </c:if>
                 <a href="/njwb/holiday/detail.jsp?holidayNo=${holiday.holidayNo}" target="contentPage"><img alt=""
                                                                                                             src="/img/detail.png"
                                                                                                             class="operateImg"></a>

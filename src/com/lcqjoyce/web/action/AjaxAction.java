@@ -1,3 +1,4 @@
+/*
 package com.lcqjoyce.web.action;
 
 import com.lcqjoyce.entity.User;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class AjaxAction {
+public class Aja4xAction {
 	private static Logger logger = Logger.getLogger(AjaxAction.class);
 	private UserService userService;
 	
@@ -33,3 +34,4 @@ public class AjaxAction {
 	}
 	
 }
+*/

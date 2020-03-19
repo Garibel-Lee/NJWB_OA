@@ -1,7 +1,7 @@
 package com.lcqjoyce.util.page;
 
 
-public class PageIndex {
+public class  PageIndex {
 	/**
 	 * 页码的开始索引和结束索引
 	 */

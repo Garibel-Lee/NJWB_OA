@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -35,15 +36,27 @@ public class HolidayMapper implements RowMapper {
             holiday.setHolidayBz(rs.getString("t_holiday_bz"));
             holiday.setHolidayStatus(rs.getString("t_holiday_status"));
             try {
-                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                LocalDateTime dateTest = LocalDateTime.parse(rs.getString("t_create_time"), df);
-                holiday.setCreateTime(dateTest);
+
                 holiday.setStartTime(LocalDate.parse(rs.getString("t_start_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
                 holiday.setEndTime(LocalDate.parse(rs.getString("t_end_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            } catch (Exception e) {
-                logger.error("datatime localtime日期转化 失败");
+
+            } catch (NullPointerException e) {
+                logger.debug("开始与结束 日期转化 失败");
                 e.printStackTrace();
             }
+            try {
+
+                String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(rs.getDate("t_create_time"));
+                logger.info("LockTime()" + timeStamp);
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime dateTest = LocalDateTime.parse(timeStamp, df);
+                holiday.setCreateTime(dateTest);
+            } catch (NullPointerException e) {
+
+                logger.debug("tCreateTime 日期转化 失败");
+                e.printStackTrace();
+            }
+
             list.add(holiday);
         }
         logger.debug("HolidayMapperMapper数据分装成功");

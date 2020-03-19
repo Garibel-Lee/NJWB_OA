@@ -8,7 +8,15 @@
             <!-- Result 处理后的结果显示name名字唯一 type=以什么样方式跳转（dispatcher 请求转发，redirect 重定向，stream 输出流，直接输出内容）
                      标签与标签之间，可以是jsp文件，也可以是字符串，也可以是script代码  ，一个action中有多个Result-->
             <result name="success" type="dispatcher">/njwb/main.jsp</result>
-            <result name="fail" type="redirect">/njwb/main.jsp</result>
+            <result name="fail" type="stream">
+                <![CDATA[
+                     <script type="text/javascript">
+
+                    alert('输入密码有误！');
+                      top.location.href="/";
+                    </script>
+                    ]]>
+            </result>
         </action>
         <action name="loginOut" method="loginOut" class="userAction">
             <!-- Result 处理后的结果显示name名字唯一 type=以什么样方式跳转（dispatcher 请求转发，redirect 重定向，stream 输出流，直接输出内容）
@@ -31,7 +39,7 @@
             <result name="success" type="stream">注册成功</result>
             <result name="fail" type="redirect">/fail.jsp</result>
         </action>
-        <action name="ajaxloginName" method="ajaxloginName" class="ajaxAction">
+        <action name="ajaxloginName" method="ajaxloginName" class="userAction">
             <result name="success" type="stream">
                 <![CDATA[
 				存在
@@ -42,6 +50,9 @@
 				不存在
 			]]>
             </result>
+        </action>
+        <action name="queryUsers" method="queryUsers" class="userAction">
+            <result type="dispatcher" name="success">/njwb/user/user.jsp</result>
         </action>
     </package>
     <package name="dept" namespace="dept">
@@ -111,7 +122,7 @@
             <result type="stream" name="fail">
                 <![CDATA[
 			 <script type="text/javascript">
-		    	alert("修改部门信息失败,请联系服务商");
+		    	alert("修改部门信息失败,请认真核对员工姓名和所在部门");
 		    	self.location.href="/njwb/dept/dept.jsp";
 		    </script>
 		    ]]>
@@ -232,22 +243,45 @@
     </package>
 
 
-
     <package name="permissions" namespace="permissions">
         <action name="getAllRoleName" method="getAllRoleName" class="permissionsAction">
             <result type="ajax" name="success">
-                <![CDATA[2B]]>
+                <![CDATA[暂时只有我和上帝知道发生什么但是终将只有上帝知道]]>
             </result>
         </action>
         <action name="getAllMenu" method="getAllMenu" class="permissionsAction">
             <result type="ajax" name="success">
-                <![CDATA[2B]]>
+                <![CDATA[暂时只有我和上帝知道发生什么但是终将只有上帝知道]]>
             </result>
         </action>
         <action name="queryPermissions" method="queryPermissions" class="permissionsAction">
             <result type="dispatcher" name="success">/njwb/permissions/permissions.jsp</result>
         </action>
+
+        <action name="addPermissions" method="addPermissions" class="permissionsAction">
+            <result type="stream" name="success">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("添加角色权限成功,将跳转到权限主页");
+                location.href="/permissions/queryPermissions.do";
+		    </script>
+		    ]]>
+            </result>
+        </action>
     </package>
 
+    <package name="role" namespace="role">
 
+        <action name="getAllRoles" method="getAllRoles" class="roleAction">
+            <result type="dispatcher" name="success">
+                /njwb/role/role.jsp
+            </result>
+        </action>
+
+        <action name="deleteRoleById" method="deleteRoleById" class="roleAction">
+            <result type="ajax" name="success">
+                <![CDATA[暂时只有我和上帝知道发生什么但是终将只有上帝知道]]>
+            </result>
+        </action>
+    </package>
 </mvc>

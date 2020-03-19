@@ -5,6 +5,8 @@ import com.lcqjoyce.entity.Menu;
 import com.lcqjoyce.entity.User;
 import com.lcqjoyce.service.PermissionsService;
 import com.lcqjoyce.service.UserService;
+import com.lcqjoyce.util.page.PageIndex;
+import com.lcqjoyce.util.page.PageResult;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -20,21 +22,36 @@ import java.util.Map;
  * @description：
  * @version: $
  */
-public class UserAction  {
+public class UserAction {
 
     private static Logger logger = Logger.getLogger(UserAction.class);
-    UserService userService ;
+    UserService userService;
 
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
+
+    public String ajaxloginName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String resultString = "success";
+        String name = request.getParameter("name");
+        logger.info("验证用户名是否存在");
+        System.out.println(name);
+        User user = userService.getUserByName(name);
+        if (null == user) {
+            resultString = "fail";
+            logger.info("验证用户名不存在");
+        } else logger.info("验证用户名存在");
+        return resultString;
+    }
+
+
     //登录代码&权限控制
-    public String login(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    public String login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String resultString = "";
         logger.debug("执行UserAction类的login方法");
         //通过名称获得提交的数据
-        String name=request.getParameter("userName");
+        String name = request.getParameter("userName");
         String pwd = request.getParameter("userPwd");
         User user = new User();
         user.setUserAccount(name);
@@ -42,24 +59,25 @@ public class UserAction  {
         User result = userService.login(user);
         // 请求转发
 
-        PermissionsService PermissionsService=(PermissionsService) BeanFactory.getObject("permissionsService");
-        Map<Menu, List<Menu>> re= PermissionsService.listAll(result.getRoleId());
-        request.setAttribute("roleMap",re);
+        PermissionsService PermissionsService = (PermissionsService) BeanFactory.getObject("permissionsService");
+        Map<Menu, List<Menu>> re = PermissionsService.listAll(result.getRoleId());
+        request.setAttribute("roleMap", re);
 
 
-        if(null!=result){ //成功
+        if (null != result) { //成功
             request.getSession().setAttribute("user", result);//放置session
-            resultString="success";
-        }else{
-            resultString="fail";
+            resultString = "success";
+        } else {
+            resultString = "fail";
         }
         System.out.println("自定义mvc解析并处理成功");
         return resultString;
     }
+
     //注册
-    public String regist(HttpServletRequest request,HttpServletResponse response)throws ServletException, IOException{
+    public String regist(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("自定义mvc的注册功能");
-        String resultString="";
+        String resultString = "";
         String name = request.getParameter("userName");
         String pwd = request.getParameter("userPwd");
         //获得一组爱好
@@ -69,23 +87,51 @@ public class UserAction  {
         user.setUserPwd(pwd);
 
         int count = userService.insert(user);
-        if(count==1){
-            resultString="success";
-        }else{
-            resultString="fail";
+        if (count == 1) {
+            resultString = "success";
+        } else {
+            resultString = "fail";
         }
         return resultString;
     }
+
     /*权限控制*/
-    public String  roleController(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+    public String roleController(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        /* User user=(User)request.getSession().getAttribute("user");
         PermissionsService PermissionsService=new PermissionsServiceImpl();
         Map<Menu, List<Menu>> re= PermissionsService.listAll(user.getRoleId());
         request.setAttribute("roleMap",re);*/
         return "";
     }
-    public String  loginOut(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+
+    public String loginOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().removeAttribute("user");
+        return "success";
+    }
+
+
+    public String queryUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userAccount = request.getParameter("userAccount");
+        String residueTimes = request.getParameter("residueTimes");
+        String roleId = request.getParameter("roleId");
+
+
+        Integer currentPage = 1;
+        if (null != request.getParameter("currentPage") && !"".equals(request.getParameter("currentPage"))) {
+            currentPage = Integer.valueOf(request.getParameter("currentPage").toString());
+        }
+        //holidayResult  获取成功
+        PageResult usersResult = userService.getUsersWithConditionByPage(userAccount, residueTimes, roleId,currentPage);
+        //3 页面索引数量
+        PageIndex usersIndex = PageIndex.getPageIndex(3, currentPage, usersResult.getTotalPage());
+        logger.info(usersResult.getListData());
+        //分页参数
+        request.setAttribute("usersResult", usersResult);
+        request.setAttribute("usersIndex", usersIndex);
+        //查询参数
+        request.setAttribute("userAccount", userAccount);
+        request.setAttribute("residueTimes", residueTimes);
+        request.setAttribute("roleId", roleId);
         return "success";
     }
 

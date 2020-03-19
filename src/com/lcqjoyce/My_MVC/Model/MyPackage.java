@@ -37,7 +37,7 @@ public class MyPackage {
 //	}
 	@Override
 	public String toString() {
-		return "MyPackage [name=" + name + ", namespace=" + namespace + ", actions=" + actions + "]";
+		return "MyPackage [name=" + name + "\n, namespace=" + namespace + ",\n actions=" + actions + "]";
 	}
 	
 	

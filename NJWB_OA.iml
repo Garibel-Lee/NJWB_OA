@@ -27,5 +27,6 @@
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.31" level="application_server_libraries" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="commons-lang3-3.9" level="project" />
+    <orderEntry type="library" name="check" level="project" />
   </component>
 </module>

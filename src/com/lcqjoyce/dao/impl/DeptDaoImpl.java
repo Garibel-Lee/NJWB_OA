@@ -37,9 +37,9 @@ public class DeptDaoImpl implements DeptDao {
         logger.debug("在UserDaoImpl类中，调用login方法");
         String sql = "SELECT\n" +
                 "* FROM\n" +
-                "t_dept";
+                "t_dept  where t_dept_no=?";
         Object[] objects = {};
-        results = JdbcTemplate.executeQuery(sql, new DeptMapper(), objects);
+        results = JdbcTemplate.executeQuery(sql, new DeptMapper(), deptNo);
         if (results.size() > 0) {
             return results.get(0); //查到了
         }

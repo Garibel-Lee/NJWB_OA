@@ -32,9 +32,9 @@ public class MenuMapper implements RowMapper {
             menu.setParentId(rs.getInt("t_parent_id"));
             try {
                 menu.setCreateTime(LocalDate.parse(rs.getString("t_create_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            } catch (NullPointerException e2){
+            } catch (NullPointerException e){
                 logger.debug("datatime localtime日期转化 空指针失败");
-                e2.printStackTrace();
+                e.printStackTrace();
             }
             System.out.println(rs.getString("t_create_time"));
 

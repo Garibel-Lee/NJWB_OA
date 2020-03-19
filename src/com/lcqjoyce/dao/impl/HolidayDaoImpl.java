@@ -44,7 +44,7 @@ public class HolidayDaoImpl implements HolidayDao {
     public int updateHoliday(Holiday holiday) {
         int count = 0;
         logger.info("在HolidayDaoImpl类中，updateHoliday");
-        String sql = "update t_holiday  set t_holiday_user=?, t_holiday_type=?, t_holiday_bz=?, t_start_time=?, t_end_time=?, t_holiday_status=? where t_holiday_no=?  ";
+        String sql = "update t_holiday  set t_holiday_user=?, t_holiday_type=?, t_holiday_bz=?, t_start_time=?, t_end_time=?, t_holiday_status=?,t_create_time=now() where t_holiday_no=?  ";
         String[] objects = {holiday.getHolidayUser(), holiday.getHolidayType().toString(), holiday.getHolidayBz(), holiday.getStartTime() + "", holiday.getEndTime() + "", holiday.getHolidayStatus(), holiday.getHolidayNo()};
         try {
             count = JdbcTemplate.executeUpdate(sql, objects);

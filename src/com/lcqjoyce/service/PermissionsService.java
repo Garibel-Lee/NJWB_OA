@@ -13,4 +13,6 @@ public interface PermissionsService {
     PageResult getPermissionsWithConditionByPage(String roleId, String menuId, Integer currentPage);
 
     List<Permissions> getPermissionsPerPage(int currentPage, int size);
+
+    int addPermissions(Permissions permissions);
 }

@@ -12,4 +12,12 @@ import java.util.List;
  */
 public interface  RoleDao {
     List<Role> getAllroles();
+
+    List<Role> queryByPage(Integer currentPage, int i);
+
+    int queryForCount();
+
+    List<Role> getRolesPerPage(int currentPage, int size);
+
+    int deleteRoleById(Integer roleId);
 }

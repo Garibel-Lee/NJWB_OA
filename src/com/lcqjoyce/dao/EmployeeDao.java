@@ -31,4 +31,8 @@ public interface EmployeeDao {
     Integer queryForCount(String empName, String empDept);
 
     List<Employee> queryByPage(String empName, String empDept,Integer currentPage,Integer pageSize);
+
+    int getEmployeeByName(String deptManager);
+
+    int getEmployeeByNameAndDeptNo(String deptManager, String deptNo);
 }

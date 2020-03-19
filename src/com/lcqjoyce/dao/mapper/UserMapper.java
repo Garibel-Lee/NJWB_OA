@@ -6,7 +6,9 @@ import org.apache.log4j.Logger;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +23,12 @@ import java.util.List;
 
 public class UserMapper implements RowMapper<User> {
     private static Logger logger = Logger.getLogger(UserMapper.class);
+
     public List<User> mapperList(ResultSet rs) throws SQLException {
         logger.debug("获得t_user表中数据，这是t_user表与User类的映射");
         List<User> list = new ArrayList<User>();
         //数据封装 rs是一个只读只进，只读--不能用于修改，只进--不能回头
-        while(rs.next()){
+        while (rs.next()) {
             System.out.println("rs不为空");
             User user = new User();
             user.setId(rs.getInt("t_id"));
@@ -33,13 +36,33 @@ public class UserMapper implements RowMapper<User> {
             user.setUserPwd(rs.getString("t_user_pwd"));
             user.setEmpNo(rs.getString("t_emp_no"));
             user.setRoleId(rs.getInt("t_role_id"));
+            user.setResidueTimes(rs.getInt("t_residueTimes"));
             try {
                 user.setCreateTime(LocalDate.parse(rs.getString("t_create_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            } catch (NullPointerException e2){
-                logger.debug("datatime localtime日期转化 空指针失败");
-                e2.printStackTrace();
+
+            } catch (NullPointerException e) {
+                logger.debug("setCreateTime 日期转化 失败");
+
+                user.setCreateTime(null);
+                e.printStackTrace();
             }
-            System.out.println(rs.getString("t_create_time"));
+            try {
+
+                String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(rs.getTimestamp("t_create_time"));
+              logger.info("LockTime()"+timeStamp);
+
+
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime dateTest = LocalDateTime.parse(timeStamp, df);
+                user.setLockTime(dateTest);
+            } catch (NullPointerException e) {
+                user.setLockTime(null);
+                logger.debug("setCreateTime 日期转化 失败");
+                user.setLockTime(null);
+                user.setCreateTime(null);
+                e.printStackTrace();
+            }
+
 
             list.add(user);
         }

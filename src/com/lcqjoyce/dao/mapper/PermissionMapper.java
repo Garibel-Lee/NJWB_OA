@@ -39,9 +39,9 @@ public class PermissionMapper implements RowMapper {
             permissions.setMenu(menu);
             try {
                 permissions.setCreateTime(LocalDate.parse(rs.getString("t_create_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-            } catch (NullPointerException e2){
+            } catch (NullPointerException e){
                 logger.debug("datatime localtime日期转化 空指针失败");
-                e2.printStackTrace();
+                e.printStackTrace();
             }
             System.out.println(rs.getString("t_create_time"));
 

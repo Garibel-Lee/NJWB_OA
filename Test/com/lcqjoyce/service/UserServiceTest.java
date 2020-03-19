@@ -2,7 +2,11 @@ package com.lcqjoyce.service;
 
 import com.lcqjoyce.My_JDBC.Init.BeanFactory;
 import com.lcqjoyce.entity.User;
+import com.lcqjoyce.util.page.PageIndex;
+import com.lcqjoyce.util.page.PageResult;
 import org.junit.Test;
+
+import java.util.List;
 
 /**
  * @author ：LCQJOYCE
@@ -30,4 +34,23 @@ public class UserServiceTest {
         user=service.login(user);
         System.out.println(user.getEmpNo()+"第一次");
     }
+
+    @Test
+    public void testQuery(){
+        UserService service= (UserService) BeanFactory.getObject("userService");
+        PageResult usersResult = service.getUsersWithConditionByPage(null, null, null,1);
+        //3 页面索引数量
+        PageIndex usersIndex = PageIndex.getPageIndex(3, 1, usersResult.getTotalPage());
+        System.out.println(usersResult.getListData());
+
+    }
+
+    @Test
+    public void getUsersByRoleId(){
+        UserService service= (UserService) BeanFactory.getObject("userService");
+        List<User> users = service.getUsersByRoleId(3);
+        System.out.println(users.toString());
+    }
+
+
 }

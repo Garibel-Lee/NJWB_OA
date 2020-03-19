@@ -3,6 +3,7 @@ package com.lcqjoyce.entity;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -25,6 +26,10 @@ public class User{
 
     private Integer roleId;
 
+    private Integer residueTimes;
+
     private LocalDate createTime;
+
+    private LocalDateTime lockTime;
 
 }

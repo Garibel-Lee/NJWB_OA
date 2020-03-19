@@ -225,12 +225,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
         } catch (Exception e) {
             logger.info("获取员工集合总数出问题");
         }
-        logger.info("queryForCount"+result);
+        logger.info("queryForCount" + result);
         return result;
     }
 
     @Override
-    public List<Employee> queryByPage(String empName, String empDept,Integer currentPage,Integer pageSize) {
+    public List<Employee> queryByPage(String empName, String empDept, Integer currentPage, Integer pageSize) {
         StringBuffer sql = new StringBuffer("select * from t_employee where 1=1 ");
         if (!(empDept == null || "".equals(empDept))) {
             sql.append(" and t_emp_dept= " + "'" + empDept + "'");
@@ -239,8 +239,43 @@ public class EmployeeDaoImpl implements EmployeeDao {
             sql.append(" and t_emp_name like  '%" + empName + "%'");
         }
         sql.append(" limit ?, ?");
-        Object  objects[] = {(currentPage-1)*pageSize,pageSize};
-        return JdbcTemplate.executeQuery(sql.toString(),new EmployeeMapper(),objects);
+        Object objects[] = {(currentPage - 1) * pageSize, pageSize};
+        return JdbcTemplate.executeQuery(sql.toString(), new EmployeeMapper(), objects);
+    }
+
+    @Override
+    public int getEmployeeByName(String deptManager) {
+        logger.debug("在EmployeeDaoImpl类中，getEmployeeByName");
+        int count = 0;
+
+        String sql = "select * from t_employee where t_emp_name=?";
+        try {
+            List<Employee> lists = JdbcTemplate.executeQuery(sql, new EmployeeMapper(), deptManager);
+            if (null != lists && lists.size() == 1) {
+                return 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+       return 0;
+    }
+
+    @Override
+    public int getEmployeeByNameAndDeptNo(String deptManager, String deptNo) {
+        logger.debug("在EmployeeDaoImpl类中，getEmployeeByName");
+        int count = 0;
+
+        String sql = "select * from t_employee where t_emp_name=? and t_emp_dept=?";
+        Object[] objects={deptManager,deptNo};
+        try {
+            List<Employee> lists = JdbcTemplate.executeQuery(sql, new EmployeeMapper(), objects);
+            if (null != lists && lists.size() == 1) {
+                return 1;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 

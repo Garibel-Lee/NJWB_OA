@@ -20,4 +20,12 @@ public  interface UserDao {
     public User login(User user);
     public User getUserByEmpNo(String id);
     public List<User> getAllUsers();
+
+    List<User> getUsersPerPage(int currentPage, int size);
+
+    List<User> queryByPage(String userAccount, String residueTimes, String roleId, Integer currentPage, int i);
+
+    int queryForCount(String userAccount, String residueTimes, String roleId);
+
+    List<User> getUsersByRoleId(Integer roleId);
 }

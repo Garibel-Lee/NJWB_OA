@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="check">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/web/WEB-INF/lib/check" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/web/WEB-INF/lib/check" recursive="false" />
+  </library>
+</component>

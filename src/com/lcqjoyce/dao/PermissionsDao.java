@@ -14,4 +14,6 @@ public interface PermissionsDao {
     List<Permissions> queryByPage(String roleId, String menuId, Integer currentPage, Integer pageSize);
 
     List<Permissions> getPermissionsPerPage(int currentPage, int size);
+
+    int addPermissions(Permissions permissions);
 }

@@ -3,6 +3,7 @@ package com.lcqjoyce.web.action;
 import com.lcqjoyce.My_JDBC.Init.BeanFactory;
 import com.lcqjoyce.entity.Dept;
 import com.lcqjoyce.service.DeptService;
+import com.lcqjoyce.service.EmployeeService;
 import net.sf.json.JSONArray;
 import org.apache.log4j.Logger;
 
@@ -22,6 +23,11 @@ import java.util.List;
 public class DeptAction {
     private static Logger logger = Logger.getLogger(DeptAction.class);
     private DeptService deptService;
+    private EmployeeService employeeService;
+
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     public void setDeptService(DeptService deptService) {
         this.deptService = deptService;
@@ -45,29 +51,37 @@ public class DeptAction {
         String resultString = "success";
         Dept dept = new Dept();
         dept.setDeptName((String) request.getParameter("deptName"));
-        dept.setDeptNo((String)request.getParameter("deptNo"));
+        dept.setDeptNo((String) request.getParameter("deptNo"));
         dept.setDeptLoc((String) request.getParameter("deptLocation"));
-        dept.setDeptManager((String)request.getParameter("deptManager"));
-        dept.setDeptIntro((String)request.getParameter("deptIntro"));
+        dept.setDeptManager((String) request.getParameter("deptManager"));
+        dept.setDeptIntro((String) request.getParameter("deptIntro"));
         logger.info(dept.toString());
-        DeptService service=(DeptService) BeanFactory.getObject("deptService");
-       if(service.addDept(dept)==1)
-           return resultString;
+        DeptService service = (DeptService) BeanFactory.getObject("deptService");
+        if (service.addDept(dept) == 1)
+            return resultString;
 
         return "fail";
     }
 
     public String deptUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String resultString = "success";
+        String deptNo = (String) request.getParameter("deptNo");
+        String deptManager = (String) request.getParameter("deptManager");
+
+        int result = employeeService.getEmployeeByNameAndDeptNo(deptManager,deptNo);
+        logger.info("getEmployeeByNameAndDeptNo查询结果"+result);
+        if (result == 0)
+            return "fail";
+
         Dept dept = new Dept();
         dept.setDeptName((String) request.getParameter("deptName"));
-        dept.setDeptNo((String)request.getParameter("deptNo"));
+        dept.setDeptNo(deptNo);
         dept.setDeptLoc((String) request.getParameter("deptLocation"));
-        dept.setDeptManager((String)request.getParameter("deptManager"));
-        dept.setDeptIntro((String)request.getParameter("deptIntro"));
+        dept.setDeptManager(deptManager);
+        dept.setDeptIntro((String) request.getParameter("deptIntro"));
         logger.info(dept.toString());
-        DeptService service=(DeptService) BeanFactory.getObject("deptService");
-        if(service.updateDept(dept)==1)
+        DeptService service = (DeptService) BeanFactory.getObject("deptService");
+        if (service.updateDept(dept) == 1)
             return resultString;
 
         return "fail";

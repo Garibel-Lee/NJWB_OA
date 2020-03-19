@@ -98,4 +98,28 @@ public class PermissionsServiceImpl implements PermissionsService {
     public List<Permissions> getPermissionsPerPage(int currentPage, int size) {
         return permissionsDao.getPermissionsPerPage(currentPage, size);
     }
+
+    @Override
+    public int addPermissions(Permissions permissions) {
+
+        int count = 0;
+        logger.debug("PermissionsServiceImpl类中，调用addPermissions");
+        try {
+            //开始事务
+            transaction.begin();
+            count = permissionsDao.addPermissions(permissions);
+            //一旦执行成功就提交
+            transaction.commit();
+
+        } catch (Exception e) {
+            logger.warn("PermissionsServiceImpl，addPermissions方法出现异常");
+            //一旦异常就回滚
+            transaction.rollback();
+            e.printStackTrace();
+        }
+
+
+        return count;
+
+    }
 }

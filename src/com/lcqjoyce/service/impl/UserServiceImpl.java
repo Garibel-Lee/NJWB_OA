@@ -4,6 +4,7 @@ import com.lcqjoyce.My_JDBC.Transaction.Transaction;
 import com.lcqjoyce.dao.UserDao;
 import com.lcqjoyce.entity.User;
 import com.lcqjoyce.service.UserService;
+import com.lcqjoyce.util.page.PageResult;
 import org.apache.log4j.Logger;
 
 import java.sql.SQLException;
@@ -71,6 +72,27 @@ public class UserServiceImpl implements UserService {
     public User login(User user) {
         logger.debug("在UserServiceImpl类中，调用login方法");
         return userDao.login(user);
+    }
+
+    @Override
+    public PageResult getUsersWithConditionByPage(String userAccount, String residueTimes, String roleId, Integer currentPage) {
+        int count = userDao.queryForCount(userAccount, residueTimes,roleId);
+        if (count > 0) {
+            //4 每一页显示数量
+            List<User> permissions = userDao.queryByPage(userAccount, residueTimes,roleId, currentPage, 4);
+            return new PageResult(permissions, count, Integer.valueOf(currentPage), 4);
+        }
+        return PageResult.empty(4);
+    }
+
+    @Override
+    public List<User> getUsersPerPage(int currentPage, int size) {
+        return userDao.getUsersPerPage(currentPage, size);
+    }
+
+    @Override
+    public List<User> getUsersByRoleId(Integer roleId) {
+        return userDao.getUsersByRoleId(roleId);
     }
 
     public User getUserById(int id) {

@@ -28,4 +28,8 @@ public interface EmployeeService {
     int deleteEmployee(Employee emp);
 
     PageResult getEmployeesWithConditionByPage(String empName, String empDept, Integer currentPage);
+
+    int getEmployeeByName(String deptManager);
+
+    int getEmployeeByNameAndDeptNo(String deptManager, String deptNo);
 }
