@@ -56,6 +56,7 @@
     <bean id="userAction" class="com.lcqjoyce.web.action.UserAction">
         <property name="userService" ref="userService"/>
         <property name="roleService" ref="roleService"/>
+        <property name="permissionsService" ref="permissionsService"/>
     </bean>
 
     <!--    <bean id="ajaxAction" class="com.lcqjoyce.web.action.AjaxAction">

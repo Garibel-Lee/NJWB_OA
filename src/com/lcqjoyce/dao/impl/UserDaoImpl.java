@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int insert(User user) throws SQLException {
-        String sql="INSERT INTO `njwb_oa`.`t_user`(`t_user_account`, `t_user_pwd`, `t_emp_no`, `t_role_id`, `t_create_time`, ) " +
+        String sql = "INSERT INTO `njwb_oa`.`t_user`(`t_user_account`, `t_user_pwd`, `t_emp_no`, `t_role_id`, `t_create_time`, ) " +
                 "VALUES ( ?, ?, ?, 3,now())";
 
 
@@ -170,19 +170,34 @@ public class UserDaoImpl implements UserDao {
     @Override
     public List<User> queryByPage(String userAccount, String residueTimes, String roleId, Integer currentPage, int pageSize) {
         StringBuffer sql = new StringBuffer("SELECT\n" +
-                "*  FROM\n" +
+                "t_user.t_id,\n" +
+                "t_user.t_user_account,\n" +
+                "t_user.t_residueTimes,\n" +
+                "t_user.t_user_pwd,\n" +
+                "t_user.t_emp_no,\n" +
+                "t_user.t_role_id,\n" +
+                "t_user.t_create_time,\n" +
+                "t_employee.t_emp_no AS e_emp_no,\n" +
+                "t_employee.t_emp_name AS e_emp_name,\n" +
+                "t_role.t_role_name AS r_role_name,\n" +
+
+                "t_role.t_id AS r_id\n" +
+                "FROM\n" +
                 "t_user\n" +
+                "LEFT JOIN t_employee ON t_user.t_emp_no = t_employee.t_emp_no\n" +
+                "LEFT JOIN t_role ON t_user.t_role_id = t_role.t_id\n" +
+
                 "WHERE 1=1 ");
         if (!(userAccount == null || "".equals(userAccount))) {
             sql.append(" and t_user_account like  '%" + userAccount + "%'");
         }
         if (!(residueTimes == null || "".equals(residueTimes))) {
-            if(Integer.valueOf(residueTimes)==0)
+            if (Integer.valueOf(residueTimes) == 0)
                 sql.append(" and t_residueTimes=0");
-            if(Integer.valueOf(residueTimes)>0)
+            if (Integer.valueOf(residueTimes) > 0)
                 sql.append(" and t_residueTimes>0");
         }
-        if (!(roleId == null|| "".equals(roleId))) {
+        if (!(roleId == null || "".equals(roleId))) {
             sql.append(" and t_role_id=" + roleId);
         }
         sql.append(" limit ?, ?");
@@ -195,16 +210,16 @@ public class UserDaoImpl implements UserDao {
     public int queryForCount(String userAccount, String residueTimes, String roleId) {
         StringBuffer sql = new StringBuffer();
         sql.append("select count(t_id) from t_user where 1=1 ");
-        if (!(userAccount == null ||"".equals(userAccount))) {
+        if (!(userAccount == null || "".equals(userAccount))) {
             sql.append(" and t_user_account like  '%" + userAccount + "%'");
         }
         if (!(residueTimes == null || "".equals(residueTimes))) {
-            if(Integer.valueOf(residueTimes)==0)
+            if (Integer.valueOf(residueTimes) == 0)
                 sql.append(" and t_residueTimes=0");
-            if(Integer.valueOf(residueTimes)>0)
+            if (Integer.valueOf(residueTimes) > 0)
                 sql.append(" and t_residueTimes>0");
         }
-        if (!(roleId == null ||"".equals(roleId))) {
+        if (!(roleId == null || "".equals(roleId))) {
             sql.append(" and t_role_id=" + roleId);
         }
 
@@ -257,7 +272,7 @@ public class UserDaoImpl implements UserDao {
                 "t_user\n" +
                 "WHERE\n" +
                 "t_user.t_id = ?  and  t_user_pwd=?";
-        Object[] objects = {id,encodeOldPwd};
+        Object[] objects = {id, encodeOldPwd};
         List<User> users = JdbcTemplate.executeQuery(sql, new UserMapper(), objects);
         if (null != users && users.size() == 1) {
             userResult = users.get(0);
@@ -267,15 +282,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int updateUserByPwd(Integer id, String encodeNewPwd) {
-            Object[] objects={encodeNewPwd , id};
+        Object[] objects = {encodeNewPwd, id};
         String sql = " update t_user  set  t_user_pwd=? where t_id=? ";
         int count = 0;
         logger.debug("UserDaoImpl  updateUserByPwd");
 
         try {
-            count = JdbcTemplate.executeUpdate(sql,objects);
+            count = JdbcTemplate.executeUpdate(sql, objects);
         } catch (Exception e) {
-            logger.error("更新密码结果："+count);
+            logger.error("更新密码结果：" + count);
             e.printStackTrace();
         }
 

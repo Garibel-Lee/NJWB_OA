@@ -122,7 +122,7 @@
                     ${users.userAccount}
             </td>
             <td>
-                    ${users.empNo}
+                    ${users.employee.empName}
             </td>
 
             <td>
@@ -130,13 +130,11 @@
             </td>
 
             <td>
-                    ${users.roleId}
+                    ${users.role.roleName}
             </td>
             <td>
                <img id=${users.id} alt="删除" src="/img/delete.png" class="operateImg" onclick="del(id)">
-                <a href="/njwb/permissions/perEdit.jsp?users=${users.id}" target="contentPage"><img alt=""
-                                                                                                                  src="/img/edit.png"
-                                                                                                                  class="operateImg"></a>--%>
+                <a href="/njwb/user/edit.jsp?userId=${users.id}" target="contentPage"><img alt=""  src="/img/edit.png"  class="operateImg"></a>
             </td>
         </tr>
     </c:forEach>

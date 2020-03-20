@@ -1,6 +1,5 @@
 package com.lcqjoyce.web.action;
 
-import com.lcqjoyce.My_JDBC.Init.BeanFactory;
 import com.lcqjoyce.entity.Menu;
 import com.lcqjoyce.entity.User;
 import com.lcqjoyce.service.PermissionsService;
@@ -30,6 +29,11 @@ public class UserAction {
     private static Logger logger = Logger.getLogger(UserAction.class);
     UserService userService;
     RoleService roleService;
+    PermissionsService permissionsService;
+
+    public void setPermissionsService(PermissionsService permissionsService) {
+        this.permissionsService = permissionsService;
+    }
 
     public void setRoleService(RoleService roleService) {
         this.roleService = roleService;
@@ -65,10 +69,10 @@ public class UserAction {
         user.setUserAccount(name);
         user.setUserPwd(MD5.encode(pwd));
         User result = userService.login(user);
+        logger.info(result.toString());
         // 请求转发
         if (null != result) { //成功
-            PermissionsService PermissionsService = (PermissionsService) BeanFactory.getObject("permissionsService");
-            Map<Menu, List<Menu>> re = PermissionsService.listAll(result.getRoleId());
+            Map<Menu, List<Menu>> re = permissionsService.listAll(result.getRoleId());
             request.setAttribute("roleMap", re);
             request.getSession().setAttribute("user", result);//放置session
             resultString = "success";

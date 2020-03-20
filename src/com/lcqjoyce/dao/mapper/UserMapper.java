@@ -1,6 +1,8 @@
 package com.lcqjoyce.dao.mapper;
 
 import com.lcqjoyce.My_JDBC.Handle.RowMapper;
+import com.lcqjoyce.entity.Employee;
+import com.lcqjoyce.entity.Role;
 import com.lcqjoyce.entity.User;
 import org.apache.log4j.Logger;
 
@@ -36,6 +38,28 @@ public class UserMapper implements RowMapper<User> {
             user.setUserPwd(rs.getString("t_user_pwd"));
             user.setEmpNo(rs.getString("t_emp_no"));
             user.setRoleId(rs.getInt("t_role_id"));
+            Role role = new Role();
+            role.setId(rs.getInt("t_role_id"));
+            try {
+                if (!rs.getString("r_role_name").isEmpty())
+                    role.setRoleName(rs.getString("r_role_name"));
+            }catch (Exception e){
+                logger.info("未使用左连接r_role_name");
+            }
+
+            Employee emp = new Employee();
+            emp.setEmpNo(rs.getString("t_emp_no"));
+
+            try {
+                if (!rs.getString("e_emp_name").isEmpty())
+                    emp.setEmpName(rs.getString("e_emp_name"));
+            }catch (Exception e){
+                logger.info("未使用左连接e_emp_name");
+            }
+
+            user.setRole(role);
+            user.setEmployee(emp);
+
             user.setResidueTimes(rs.getInt("t_residueTimes"));
             try {
                 user.setCreateTime(LocalDate.parse(rs.getString("t_create_time"), DateTimeFormatter.ofPattern("yyyy-MM-dd")));
@@ -49,7 +73,7 @@ public class UserMapper implements RowMapper<User> {
             try {
 
                 String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(rs.getTimestamp("t_create_time"));
-              logger.info("t_create_time()"+timeStamp);
+                logger.info("t_create_time()" + timeStamp);
 
 
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
