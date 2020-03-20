@@ -28,4 +28,10 @@ public  interface UserDao {
     int queryForCount(String userAccount, String residueTimes, String roleId);
 
     List<User> getUsersByRoleId(Integer roleId);
+
+    User selectUserByIdAndPwd(Integer id, String encodeOldPwd);
+
+    int updateUserByPwd(Integer id, String encodeNewPwd);
+
+    int addUser(User user);
 }

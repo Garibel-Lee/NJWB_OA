@@ -11,7 +11,6 @@
             <result name="fail" type="stream">
                 <![CDATA[
                      <script type="text/javascript">
-
                     alert('输入密码有误！');
                       top.location.href="/";
                     </script>
@@ -39,6 +38,20 @@
             <result name="success" type="stream">注册成功</result>
             <result name="fail" type="redirect">/fail.jsp</result>
         </action>
+
+        <action name="resetPwd" method="resetPwd" class="userAction">
+            <result name="success" type="redirect">/
+            </result>
+            <result name="fail" type="stream">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("密码修改失败,将回调修改页面");
+                 self.location.href="/njwb/user/resetPwd.jsp";
+		    </script>
+		    ]]></result>
+        </action>
+
+
         <action name="ajaxloginName" method="ajaxloginName" class="userAction">
             <result name="success" type="stream">
                 <![CDATA[
@@ -54,7 +67,18 @@
         <action name="queryUsers" method="queryUsers" class="userAction">
             <result type="dispatcher" name="success">/njwb/user/user.jsp</result>
         </action>
+
+        <action name="addUser" method="addUser" class="userAction">
+            <result type="redirect" name="success">/queryUsers.do</result>
+        </action>
+        <action name="deleteUserById" method="deleteUserById" class="userAction">
+            <result type="ajax" name="success">稍等</result>
+        </action>
+
     </package>
+
+
+
     <package name="dept" namespace="dept">
 
 
@@ -70,7 +94,7 @@
                 <![CDATA[
 			 <script type="text/javascript">
 		    	alert("部门添加成功,将跳转部门管理主页");
-                 self.location.href="/njwb/dept/dept.jsp";
+
 		    </script>
 		    ]]>
             </result>
@@ -131,6 +155,15 @@
     </package>
 
     <package name="emp" namespace="emp">
+
+
+        <action name="empGetall" method="empGetall" class="empAction">
+            <result type="ajax" name="success">
+                <![CDATA[2B]]>
+            </result>
+        </action>
+
+
 
         <action name="addEmp" method="addEmp" class="empAction">
             <result type="stream" name="success">
@@ -215,13 +248,8 @@
             </result>
         </action>
         <action name="addHoliday" method="addHoliday" class="holidayAction">
-            <result type="stream" name="success">
-                <![CDATA[
-			 <script type="text/javascript">
-		    	alert("添加假期信息成功,将跳转到假期主页");
-                location.href="/holiday/queryHoliday.do";
-		    </script>
-		    ]]>
+            <result type="ajax" name="success">
+               稍等
             </result>
         </action>
 
@@ -283,5 +311,29 @@
                 <![CDATA[暂时只有我和上帝知道发生什么但是终将只有上帝知道]]>
             </result>
         </action>
+
+
+        <action name="addRole" method="addRole" class="roleAction">
+            <result type="stream" name="success">
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("添加角色成功,将跳转到角色主页");
+                location.href="/role/getAllRoles.do";
+		    </script>
+		    ]]>
+            </result>
+
+            <result type="stream" name="fail">
+
+                <![CDATA[
+			 <script type="text/javascript">
+		    	alert("添加角色失败：角色名已存在！");
+                location.href="/role/getAllRoles.do";
+		    </script>
+		    ]]>
+            </result>
+        </action>
+
+
     </package>
 </mvc>

@@ -93,6 +93,7 @@ public class DispatcherServlet extends HttpServlet {
 			//获得方法
 
 			Method method = clazz.getDeclaredMethod(action.getMethod(), HttpServletRequest.class,HttpServletResponse.class);
+			logger.info("获得方法"+ method.toString());
 			//调用方法
 			resultString= method. invoke(obj, request,response).toString();
 		} catch (NoSuchMethodException e) {

@@ -91,7 +91,7 @@
     <tr>
         <td>${emp.empNo}</td>
         <td>${emp.empName}</td>
-        <td>${emp.empDept}</td>
+        <td>${emp.dept.deptNo}</td>
         <td>${emp.sex}</td>
         <td>${emp.education}</td>
         <td>${emp.phone}</td>
@@ -100,7 +100,7 @@
     </tr>
 </table>
 <div id="back">
-    <a href="emp/queryEmp.do" target="contentPage"><input type="button" value="返回"></a>
+    <a href="emp/queryEmp.do" target="contentPage"><input type="button" value="返回" /></a>
 </div>
 <input type="hidden" value="${empNo}" id="hiddenInput">
 </body>

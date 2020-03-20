@@ -36,7 +36,7 @@ String empNo=(String) request.getParameter("empNo");
 					  var empDept = $("#empDept");
 					  for(var i = 0; i < depts.length;i++){
 
-					  	if("${emp.empDept}"==depts[i].deptNo) {
+					  	if("${emp.dept.deptNo}"==depts[i].deptNo) {
 							var option = $("<option selected=selected   value=" + depts[i].deptNo + ">" + depts[i].deptName + "</option>");
 							empDept.append(option);
 					  	}
@@ -52,7 +52,7 @@ String empNo=(String) request.getParameter("empNo");
 			  $("#education").attr("value", "${emp.education}");
 		  });
 		  function refesh() {
-			  $("#empDept").attr("value", "${emp.empDept}");
+			  $("#empDept").attr("value", "${emp.dept.deptNo}");
 		  }
 	  </script>
 
@@ -84,7 +84,7 @@ String empNo=(String) request.getParameter("empNo");
   
   <body>
    	<div id="container" >
-   		<h3 style="width: 200px;margin: 0 auto;">  ${emp.empDept}的${emp.empNo}修改</h3>
+   		<h3 style="width: 200px;margin: 0 auto;">  ${emp.dept.deptNo}的${emp.empNo}修改</h3>
 	   	<form action="emp/empUpdate.do" method="post" onsubmit="return checkBeforeSubmit()">
 		   	<table id = "empEditTable">
 		   		<tr>

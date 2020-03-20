@@ -95,6 +95,47 @@ public class UserServiceImpl implements UserService {
         return userDao.getUsersByRoleId(roleId);
     }
 
+    @Override
+    public User selectUserByIdAndPwd(Integer id, String encodeOldPwd) {
+        return userDao.selectUserByIdAndPwd(id,encodeOldPwd);
+    }
+
+    @Override
+    public int updateUserByPwd(Integer id, String encodeNewPwd) {
+        logger.debug("在UserServiceImpl类中，调用updateUserByPwd更新密码方法");
+        transaction.begin();
+        int count = 0;
+        try {
+            count = userDao.updateUserByPwd(id,encodeNewPwd);
+            //一旦执行成功就提交
+            transaction.commit();
+        } catch (Exception e) {
+            logger.warn("在UserServiceImpl类中，insert方法出现异常");
+            //一旦异常就回滚
+            transaction.rollback();
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    @Override
+    public int addUser(User user) {
+        logger.debug("在UserServiceImpl类中，addUser");
+        transaction.begin();
+        int count = 0;
+        try {
+            count = userDao.addUser(user);
+            //一旦执行成功就提交
+            transaction.commit();
+        } catch (Exception e) {
+            logger.warn("在UserServiceImpl类中，addUser 异常");
+            //一旦异常就回滚
+            transaction.rollback();
+            e.printStackTrace();
+        }
+        return count;
+    }
+
     public User getUserById(int id) {
         logger.debug("在UserServiceImpl类中，调用getUserById方法");
         return userDao.getUserById(id);

@@ -35,12 +35,12 @@
         }
     </style>
     <script type="text/javascript">
-        /* //页面加载时，生成随机验证码
+        //页面加载时，生成随机验证码
          window.onload=function(){
              createCode(4);
-         }*/
+         }
 
-        /*//生成4位验证码的方法
+        //生成4位验证码的方法
         function createCode(length) {
             var code = "";
             var codeLength = parseInt(length); //验证码的长度
@@ -62,12 +62,13 @@
                 checkCode.className = "code";
                 //将生成验证码赋值到显示区
                 checkCode.innerHTML = code;
+
             }
-        }*/
+        }
 
         //判断用户名，密码，验证码是否正确
         function checkBeforeSubmit() {
-            /*		  //获取输入的验证码
+           		  //获取输入的验证码
                       var inputCode =  $("#code").val();
                       //获取显示区生成的验证码
                       var checkCode = document.getElementById("checkCode").innerHTML;
@@ -75,11 +76,11 @@
                       if (inputCode == ""){
                           alert("验证码不能为空");
                           return false;
-                      }else if (inputCode.toUpperCase() != checkCode.toUpperCase()){
+                      }else if (inputCode.toLowerCase() != checkCode.toLowerCase()){
                           alert("验证码输入有误");
                           createCode(4);
                           return false;
-                      }*/
+                      }
 
             var userAccount = $("#userName").val();
             if (userAccount == "") {
@@ -183,7 +184,7 @@
                     <input type="text" name="code" id="code"/>
                 </td>
                 <td>
-
+                    <div class="code" id="checkCode" style="border: solid 1px pink;-webkit-user-select:none;" onclick="createCode(4)" ></div>
                 </td>
             </tr>
 

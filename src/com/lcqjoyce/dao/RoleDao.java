@@ -20,4 +20,8 @@ public interface  RoleDao {
     List<Role> getRolesPerPage(int currentPage, int size);
 
     int deleteRoleById(Integer roleId);
+
+    List<Role> getRoleByRoleName(String roleName);
+
+    int addRole(String roleName);
 }

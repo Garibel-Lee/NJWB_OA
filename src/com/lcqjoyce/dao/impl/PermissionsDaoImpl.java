@@ -133,7 +133,7 @@ public class PermissionsDaoImpl implements PermissionsDao {
         //limit 不支持占位符
         //String sql="select * from t_mood LIMIT ?,?";
         //String[] objs= {begin+"",size+""};
-        return JdbcTemplate.executeQuery(sql, new PermissionMapper(), null);
+        return JdbcTemplate.executeQuery(sql, new PermissionMapper(), new Object[]{});
     }
 
     @Override
@@ -143,7 +143,7 @@ public class PermissionsDaoImpl implements PermissionsDao {
 
         String sql = "INSERT INTO `njwb_oa`.`t_permissions`( `t_role_id`, `t_menu_id`, `t_create_time`) VALUES (?, ?, now());";
 
-        String[] objects = {permissions.getRole().getId().toString(), permissions.getMenu().getId().toString()};
+        Object[] objects = {permissions.getRole().getId().toString(), permissions.getMenu().getId().toString()};
         try {
             count = JdbcTemplate.executeUpdate(sql, objects);
             logger.info("在PermissionsDaoImpl类中执行insert返回结果是：" + count);

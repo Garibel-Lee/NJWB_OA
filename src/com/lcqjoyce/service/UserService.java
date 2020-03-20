@@ -26,4 +26,10 @@ public interface UserService {
 
 
     List<User> getUsersByRoleId(Integer roleId);
+
+    User selectUserByIdAndPwd(Integer id, String encode);
+
+    int updateUserByPwd(Integer id, String encodeNewPwd);
+
+    int addUser(User user);
 }

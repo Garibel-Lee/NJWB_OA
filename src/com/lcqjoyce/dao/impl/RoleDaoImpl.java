@@ -20,7 +20,8 @@ import java.util.List;
  * @version: $
  */
 public class RoleDaoImpl implements RoleDao {
-    private static Logger logger= Logger.getLogger("RoleDaoImpl");
+    private static Logger logger = Logger.getLogger("RoleDaoImpl");
+
     @Override
     public List<Role> getAllroles() {
         List<Role> results = null;
@@ -82,21 +83,55 @@ public class RoleDaoImpl implements RoleDao {
         //limit 不支持占位符
         //String sql="select * from t_mood LIMIT ?,?";
         //String[] objs= {begin+"",size+""};
-        return JdbcTemplate.executeQuery(sql, new RoleMapper(), null);
+        return JdbcTemplate.executeQuery(sql, new RoleMapper(), new Object[]{});
     }
 
     @Override
     public int deleteRoleById(Integer roleId) {
-        int count=0;
+        int count = 0;
         logger.debug("deleteRoleById+");
-        String sql = "delete  from t_role  where t_role_id=?";
+        String sql = "delete  from t_role  where t_id=?";
         try {
-            count=JdbcTemplate.executeUpdate(sql, new RoleMapper(), roleId);
-        }catch (Exception e){
+            count = JdbcTemplate.executeUpdate(sql, roleId);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
 
         return count;
+    }
+
+    @Override
+    public List<Role> getRoleByRoleName(String roleName) {
+        logger.info("getRoleByRoleName ");
+        String sql = new StringBuffer()
+                .append(" select ")
+                .append(" 	t_id,t_role_name,t_create_time  ")
+                .append(" from ")
+                .append(" 	t_role ")
+                .append(" where ")
+                .append(" 	t_role_name = ? ")
+                .toString();
+
+
+        return JdbcTemplate.executeQuery(sql, new RoleMapper(), roleName);
+    }
+
+    @Override
+    public int addRole(String roleName) {
+        String sql = "INSERT INTO `njwb_oa`.`t_role`( `t_role_name`, `t_create_time`) VALUES ( ?, now());";
+        int count = 0;
+        logger.debug("RoleDaoImpl  addRole");
+
+        try {
+            count = JdbcTemplate.executeUpdate(sql,roleName);
+        } catch (Exception e) {
+            logger.error("addRole  结果"+count);
+            e.printStackTrace();
+        }
+
+
+        return count;
+
     }
 }

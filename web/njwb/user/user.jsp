@@ -42,6 +42,9 @@
     <script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
     <script type="text/javascript">
 
+
+
+
         function getAllRoleName() {
             $.ajax({
                 type: "POST",
@@ -62,14 +65,14 @@
             if (true == result) {
                 $.ajax({
                     type: "POST",
-                    url: "/user/deleteUserById.do",
+                    url: "/deleteUserById.do",
                     data: {"userId": userId},
                     success: function (msg) {
                         if (msg != "") {
                             alert(msg);
                         } else {
                             alert("删除成功");
-                            search();
+                            self.location.href="/queryUsers.do";
                         }
                     }
                 });
@@ -130,7 +133,7 @@
                     ${users.roleId}
             </td>
             <td>
-             <%--   <img id=${users.id} alt="删除" src="/img/delete.png" class="operateImg" onclick="del(id)">
+               <img id=${users.id} alt="删除" src="/img/delete.png" class="operateImg" onclick="del(id)">
                 <a href="/njwb/permissions/perEdit.jsp?users=${users.id}" target="contentPage"><img alt=""
                                                                                                                   src="/img/edit.png"
                                                                                                                   class="operateImg"></a>--%>

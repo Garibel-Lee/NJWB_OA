@@ -21,7 +21,8 @@ public class Employee {
 
     private String empName;
 
-    private String empDept;
+ //   private String empDept;
+    private Dept dept;
 
     private String sex;
 

@@ -70,4 +70,29 @@ public class RoleServiceImpl implements RoleService {
         }
         return count;
     }
+
+    @Override
+    public List<Role> getRoleByRoleName(String roleName) {
+       return  roleDao.getRoleByRoleName(roleName);
+    }
+
+    @Override
+    public int addRole(String roleName) {
+        int count = 0;
+        logger.debug("RoleServiceImpl类中，getUsersPerPage");
+        try {
+            //开始事务
+            transaction.begin();
+            count = roleDao.addRole(roleName);
+            //一旦执行成功就提交
+            transaction.commit();
+
+        } catch (Exception e) {
+            logger.warn("RoleServiceImpl类中,删除ID失败进行回滚");
+            //一旦异常就回滚
+            transaction.rollback();
+            e.printStackTrace();
+        }
+        return count;
+    }
 }

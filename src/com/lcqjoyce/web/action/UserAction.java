@@ -4,7 +4,9 @@ import com.lcqjoyce.My_JDBC.Init.BeanFactory;
 import com.lcqjoyce.entity.Menu;
 import com.lcqjoyce.entity.User;
 import com.lcqjoyce.service.PermissionsService;
+import com.lcqjoyce.service.RoleService;
 import com.lcqjoyce.service.UserService;
+import com.lcqjoyce.util.MD5;
 import com.lcqjoyce.util.page.PageIndex;
 import com.lcqjoyce.util.page.PageResult;
 import org.apache.log4j.Logger;
@@ -12,6 +14,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,11 @@ public class UserAction {
 
     private static Logger logger = Logger.getLogger(UserAction.class);
     UserService userService;
+    RoleService roleService;
+
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -35,7 +43,7 @@ public class UserAction {
     public String ajaxloginName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String resultString = "success";
         String name = request.getParameter("name");
-        logger.info("验证用户名是否存在");
+        logger.info("验证用户名是否   存在");
         System.out.println(name);
         User user = userService.getUserByName(name);
         if (null == user) {
@@ -55,16 +63,13 @@ public class UserAction {
         String pwd = request.getParameter("userPwd");
         User user = new User();
         user.setUserAccount(name);
-        user.setUserPwd(pwd);
+        user.setUserPwd(MD5.encode(pwd));
         User result = userService.login(user);
         // 请求转发
-
-        PermissionsService PermissionsService = (PermissionsService) BeanFactory.getObject("permissionsService");
-        Map<Menu, List<Menu>> re = PermissionsService.listAll(result.getRoleId());
-        request.setAttribute("roleMap", re);
-
-
         if (null != result) { //成功
+            PermissionsService PermissionsService = (PermissionsService) BeanFactory.getObject("permissionsService");
+            Map<Menu, List<Menu>> re = PermissionsService.listAll(result.getRoleId());
+            request.setAttribute("roleMap", re);
             request.getSession().setAttribute("user", result);//放置session
             resultString = "success";
         } else {
@@ -84,7 +89,7 @@ public class UserAction {
         User user = new User();
 
         user.setUserAccount(name);
-        user.setUserPwd(pwd);
+        user.setUserPwd(MD5.encode(pwd));
 
         int count = userService.insert(user);
         if (count == 1) {
@@ -134,5 +139,62 @@ public class UserAction {
         request.setAttribute("roleId", roleId);
         return "success";
     }
+
+
+    //修改密码
+    public String resetPwd(HttpServletRequest request, HttpServletResponse resp){
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        logger.info(oldPassword+"&&&"+newPassword);
+        //获取登录的用户信息
+        HttpSession session = request.getSession();
+        User loginUser = (User) session.getAttribute("user");
+        //通过登录的用户ID和旧密码查找用户
+        User user = userService.selectUserByIdAndPwd(loginUser.getId(),MD5.encode(oldPassword));
+        //找到旧密码
+        if(user.getId() != null){
+            userService.updateUserByPwd(loginUser.getId(),MD5.encode(newPassword));
+            session.removeAttribute("user");
+            return "success";
+        }else{
+
+            return "fail";
+        }
+    }
+
+   public String addUser(HttpServletRequest request, HttpServletResponse resp){
+        String userAccount = request.getParameter("userAccount");
+        //生成账号密码一致
+        String userPwd = request.getParameter("userAccount");
+        String empNo = request.getParameter("empNo");
+        String userStatus = request.getParameter("userStatus");
+        String roleId = request.getParameter("roleId");
+
+        //获取登录的用户信息
+        User user=new User();
+       user.setUserAccount(userAccount);
+       user.setUserPwd(MD5.encode(userPwd));
+       user.setEmpNo(empNo);
+       user.setResidueTimes(Integer.valueOf(userStatus));
+       user.setRoleId(Integer.valueOf(roleId));
+
+       int count=userService.addUser(user);
+        if(count==1)
+            return "success";
+        return "faill";
+    }
+
+
+    public String deleteUserById(HttpServletRequest request, HttpServletResponse resp){
+        Integer userId = Integer.parseInt(request.getParameter("userId"));
+
+        User user = userService.getUserById(userId);
+        int count=userService.delete(user);
+        if(count==1)
+            return "success";
+        return "fail";
+    }
+
+
 
 }

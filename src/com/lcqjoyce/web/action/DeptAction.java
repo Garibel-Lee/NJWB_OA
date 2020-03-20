@@ -47,11 +47,21 @@ public class DeptAction {
 
     }
 
+
+
     public String deptAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String resultString = "success";
         Dept dept = new Dept();
         dept.setDeptName((String) request.getParameter("deptName"));
         dept.setDeptNo((String) request.getParameter("deptNo"));
+        String deptNo = (String) request.getParameter("deptNo");
+        String deptManager = (String) request.getParameter("deptManager");
+
+        int result = employeeService.getEmployeeByNameAndDeptNo(deptManager,deptNo);
+        logger.info("getEmployeeByNameAndDeptNo查询结果"+result);
+        if (result == 0)
+            return "fail";
+
         dept.setDeptLoc((String) request.getParameter("deptLocation"));
         dept.setDeptManager((String) request.getParameter("deptManager"));
         dept.setDeptIntro((String) request.getParameter("deptIntro"));
@@ -103,5 +113,8 @@ public class DeptAction {
         }
         return resultString;
     }
+
+
+
 
 }

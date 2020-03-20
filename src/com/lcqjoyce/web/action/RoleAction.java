@@ -1,5 +1,6 @@
 package com.lcqjoyce.web.action;
 
+import com.lcqjoyce.entity.Role;
 import com.lcqjoyce.entity.User;
 import com.lcqjoyce.service.RoleService;
 import com.lcqjoyce.service.UserService;
@@ -81,17 +82,16 @@ public class RoleAction {
 
 
 
-/*    public String addRole(HttpServletRequest request,HttpServletResponse response){
+    public String addRole(HttpServletRequest request,HttpServletResponse response){
         String roleName = request.getParameter("roleName");
         List<Role> roles = roleService.getRoleByRoleName(roleName);
         if(roles.size() == 0){
-            roleService.addRole(roleName);
+            int result=roleService.addRole(roleName);
             return "success";
         }else{
-            request.setAttribute("isError", true);
-            request.setAttribute("errorMessage", "添加角色失败：角色名已存在！");
+
             return "fail";
         }
-    }*/
+    }
 
 }

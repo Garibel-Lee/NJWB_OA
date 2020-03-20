@@ -178,7 +178,7 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" value="提交" onclick="sumbit()" id="updateInput"/>
+                    <input type="submit" value="提交"  id="updateInput"/>
                     <a href="/njwb/holiday/edit.jsp?holidayNo=${holiday.holidayNo}" target="contentPage"><input type="button" value="重置" /></a>
                     <a href="holiday/queryHoliday.do" target="contentPage"><input type="button" value="返回"></a>
                 </td>

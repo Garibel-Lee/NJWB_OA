@@ -27,12 +27,13 @@ public class HolidayDaoImpl implements HolidayDao {
 
         int count = 0;
         logger.info("在HolidayDaoImpl类中，addHoliday");
-        String sql = "INSERT INTO t_holiday(t_holiday_no,t_holiday_user, t_holiday_type, t_holiday_bz, t_start_time, t_end_time, t_holiday_status,t_create_time) " +
-                "VALUES (?,?,?,?,?,?,?,now())";//所有的占位符必须是英文的问号
-        String[] objects = {holiday.getHolidayNo(), holiday.getHolidayUser(), holiday.getHolidayType().toString(), holiday.getHolidayBz(), holiday.getStartTime() + "", holiday.getEndTime() + "", holiday.getHolidayStatus()};
+        String sql = "INSERT INTO t_holiday(t_holiday_no,t_holiday_user, t_holiday_type, t_holiday_bz, t_start_time, t_end_time, t_holiday_status) " +
+                "VALUES (?,?,?,?,?,?,?)";//所有的占位符必须是英文的问号
+        logger.info(holiday.toString());
+        Object[] objects = {holiday.getHolidayNo(), holiday.getHolidayUser(), holiday.getHolidayType(), holiday.getHolidayBz(), holiday.getStartTime() + "", holiday.getEndTime() + "",0};
         try {
             count = JdbcTemplate.executeUpdate(sql, objects);
-            logger.info("addholidat执行insert返回结果是：" + count);
+            logger.info("addholiday执行insert返回结果是：" + count);
         } catch (SQLException e) {
             logger.error(count);
         }
@@ -45,7 +46,7 @@ public class HolidayDaoImpl implements HolidayDao {
         int count = 0;
         logger.info("在HolidayDaoImpl类中，updateHoliday");
         String sql = "update t_holiday  set t_holiday_user=?, t_holiday_type=?, t_holiday_bz=?, t_start_time=?, t_end_time=?, t_holiday_status=?,t_create_time=now() where t_holiday_no=?  ";
-        String[] objects = {holiday.getHolidayUser(), holiday.getHolidayType().toString(), holiday.getHolidayBz(), holiday.getStartTime() + "", holiday.getEndTime() + "", holiday.getHolidayStatus(), holiday.getHolidayNo()};
+        Object[] objects = {holiday.getHolidayUser(), holiday.getHolidayType().toString(), holiday.getHolidayBz(), holiday.getStartTime() + "", holiday.getEndTime() + "", holiday.getHolidayStatus(), holiday.getHolidayNo()};
         try {
             count = JdbcTemplate.executeUpdate(sql, objects);
             logger.info("updateHoliday执行insert返回结果是：" + count);
@@ -60,7 +61,7 @@ public class HolidayDaoImpl implements HolidayDao {
         int count = 0;
         logger.info("在HolidayDaoImpl类中，deleteHoliday");
         String sql = "delete from t_holiday  where t_holiday_no=?  ";
-        String[] objects = {holiday.getHolidayNo()};
+        Object[] objects = {holiday.getHolidayNo()};
         try {
             count = JdbcTemplate.executeUpdate(sql, objects);
             logger.info("deleteHoliday执行deletet返回结果是：" + count);
@@ -72,7 +73,14 @@ public class HolidayDaoImpl implements HolidayDao {
 
     @Override
     public List<Holiday> getAllHolidays() {
-        return null;
+        List<Holiday> results = null;
+        logger.debug("在holidayDaoImpl类中，getAllHolidays");
+        String sql = "SELECT\n" +
+                "* FROM\n" +
+                "t_holiday";
+        Object[] objects = {};
+        results = JdbcTemplate.executeQuery(sql, new HolidayMapper(), objects);
+        return results;
     }
 
     @Override

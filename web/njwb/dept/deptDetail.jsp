@@ -86,9 +86,9 @@
 
 </table>
 <div id="back">
-    <a href="/njwb/dept/dept.jsp" target="contentPage"><input type="button" value="返回"></a>
+    <a href="/njwb/dept/dept.jsp" target="contentPage"><input type="button" value="返回"/></a>
 </div>
-<input type="hidden" value="${deptNo}" id="hiddenInput">
+<input type="hidden" value="${deptNo}" id="hiddenInput"/>
 </body>
 
 </html>

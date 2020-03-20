@@ -1,6 +1,7 @@
 package com.lcqjoyce.dao.mapper;
 
 import com.lcqjoyce.My_JDBC.Handle.RowMapper;
+import com.lcqjoyce.entity.Dept;
 import com.lcqjoyce.entity.Employee;
 import org.apache.log4j.Logger;
 
@@ -30,7 +31,23 @@ public class EmployeeMapper implements RowMapper {
             employee.setId(rs.getInt("id"));
             employee.setEmpNo(rs.getString("t_emp_no"));
             employee.setEmpName(rs.getString("t_emp_name"));
-            employee.setEmpDept(rs.getString("t_emp_dept"));
+            Dept dept=new Dept();
+            dept.setDeptNo(rs.getString("t_emp_dept"));
+           try {
+               String deptName=(String) rs.getString("d_dept_name");
+               if(!(deptName==null && "".equals(deptName)))
+                   dept.setDeptName(deptName);
+
+           }catch (Exception e)
+           {
+               logger.info("未用到实体维护");
+               e.printStackTrace();
+           }
+
+
+
+
+            employee.setDept(dept);
             employee.setEducation(rs.getString("t_education"));
             employee.setPhone(rs.getString("t_phone"));
             employee.setSex(rs.getString("t_sex"));

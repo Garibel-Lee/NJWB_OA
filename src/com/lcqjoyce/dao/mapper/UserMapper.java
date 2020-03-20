@@ -49,7 +49,7 @@ public class UserMapper implements RowMapper<User> {
             try {
 
                 String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(rs.getTimestamp("t_create_time"));
-              logger.info("LockTime()"+timeStamp);
+              logger.info("t_create_time()"+timeStamp);
 
 
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

@@ -7,14 +7,14 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author mybatis-plus
  * @since 2020-03-13
  */
 @Data
-public class User{
+public class User {
 
     private Integer id;
 
@@ -24,7 +24,11 @@ public class User{
 
     private String empNo;
 
+    private Employee employee;
+
     private Integer roleId;
+
+    private Role role;
 
     private Integer residueTimes;
 

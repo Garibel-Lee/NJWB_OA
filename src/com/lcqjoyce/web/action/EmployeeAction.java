@@ -1,16 +1,20 @@
 package com.lcqjoyce.web.action;
 
+import com.lcqjoyce.entity.Dept;
 import com.lcqjoyce.entity.Employee;
 import com.lcqjoyce.service.EmployeeService;
 import com.lcqjoyce.util.page.PageIndex;
 import com.lcqjoyce.util.page.PageResult;
+import net.sf.json.JSONArray;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author ：LCQJOYCE
@@ -61,7 +65,9 @@ public class EmployeeAction {
         String resultString = "success";
         Employee emp = new Employee();
         emp.setEmpName((String) request.getParameter("empName"));
-        emp.setEmpDept((String) request.getParameter("empDept"));
+        Dept dept=new Dept();
+        dept.setDeptNo((String) request.getParameter("empDept"));
+        emp.setDept(dept);
         emp.setEducation((String) request.getParameter("education"));
         emp.setEmpNo(Employee.getNumber());
         emp.setSex((String) request.getParameter("sex"));
@@ -79,7 +85,9 @@ public class EmployeeAction {
         String resultString = "success";
         Employee emp = new Employee();
         emp.setEmpName((String) request.getParameter("empName"));
-        emp.setEmpDept((String) request.getParameter("empDept"));
+        Dept dept=new Dept();
+        dept.setDeptNo((String) request.getParameter("empDept"));
+        emp.setDept(dept);
         emp.setEducation((String) request.getParameter("education"));
         emp.setEmpNo((String) request.getParameter("empNo"));
         emp.setSex((String) request.getParameter("sex"));
@@ -104,4 +112,20 @@ public class EmployeeAction {
         return "fail";
     }
 
+
+    public String empGetall(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String resultString = "success";
+        List<Employee> emps = employeeService.getAllEmployees();
+        PrintWriter out;
+        try {
+            out = response.getWriter();
+            String json = JSONArray.fromObject(emps).toString();
+            out.write(json);
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return resultString;
+    }
 }

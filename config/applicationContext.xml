@@ -13,6 +13,7 @@
 
     <bean id="userService" class="com.lcqjoyce.service.impl.UserServiceImpl">
         <property name="userDao" ref="userDao"/>
+        <property name="transaction" ref="tran"/>
     </bean>
 
 
@@ -54,6 +55,7 @@
 
     <bean id="userAction" class="com.lcqjoyce.web.action.UserAction">
         <property name="userService" ref="userService"/>
+        <property name="roleService" ref="roleService"/>
     </bean>
 
     <!--    <bean id="ajaxAction" class="com.lcqjoyce.web.action.AjaxAction">

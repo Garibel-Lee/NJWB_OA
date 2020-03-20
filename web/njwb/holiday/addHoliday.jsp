@@ -109,7 +109,7 @@
 		   			开始时间:
 		   			</td>
 		   			<td>
-		   				<input type = "text" id="startTime" onclick="laydate()"/>
+		   				<input type = "date" id="startTime" />
 		   			</td>
 		   		</tr>  
 		
@@ -118,14 +118,13 @@
 		   			结束时间:
 		   			</td>
 		   			<td>
-		   				<input type = "text" id="endTime" onclick="laydate()"/>
+		   				<input type = "date" id="endTime"/>
 		   			</td>
 		   		</tr>  
 		   		
 		   		<tr>
 		   			<td colspan="2">
 		   				<input type = "button" value="草稿" onclick="addHoliday('草稿')"/>
-		   				<input type = "button" value="提交" onclick="addHoliday('已提交')"/>
 		   				<input type = "button" value="重置" onclick="reset()"/>
 						<a href="/holiday/updateHoliday.do" target="contentPage"><input type="button" value="返回"></a>
 		   			</td>

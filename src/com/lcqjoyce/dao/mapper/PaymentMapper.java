@@ -19,8 +19,8 @@ import java.util.List;
  * @description：
  * @version: $
  */
-public class HolidayMapper implements RowMapper {
-    private static Logger logger = Logger.getLogger(HolidayMapper.class);
+public class PaymentMapper implements RowMapper {
+    private static Logger logger = Logger.getLogger(PaymentMapper.class);
 
     public List<Holiday> mapperList(ResultSet rs) throws SQLException {
         logger.info("获得t_holiday表中数据，这是t_holiday表与HolidayMapper类的映射");

@@ -115,12 +115,12 @@
             <td colspan="2">
                 <input type="submit" value="修改"/>
                 <input type="button" value="重置" onclick="refresh()"/>
-                <a href="/njwb/dept/dept.jsp" target="contentPage"><input type="button" value="返回"></a>
+                <a href="/njwb/dept/dept.jsp" target="contentPage"><input type="button" value="返回"/></a>
             </td>
         </tr>
     </table>
 </form>
-<input type="hidden" value="${deptNo}" id="hiddenInput">
+<input type="hidden" value="${deptNo}" id="hiddenInput"/>
 <c:if test='${isError}'>
     <script type="text/javascript">
         alert("${errorMessage}");

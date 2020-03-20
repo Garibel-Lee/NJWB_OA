@@ -62,9 +62,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 "t_employee.t_email,\n" +
                 "t_employee.t_phone,\n" +
                 "t_employee.t_entry_time,\n" +
-                "t_employee.t_create_time\n" +
+                "t_employee.t_create_time,\n" +
+                "t_dept.t_dept_name AS d_dept_name\n" +
                 "FROM\n" +
-                "t_employee\n";
+                "t_employee\n" +
+                "LEFT JOIN t_dept ON t_dept.t_dept_no = t_employee.t_emp_dept\n";
         Object[] objects = {};
         List<Employee> lists = JdbcTemplate.executeQuery(sql, new EmployeeMapper(), objects);
        /* if(null!=lists && lists.size()==1){
@@ -85,7 +87,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         //limit 不支持占位符
         //String sql="select * from t_mood LIMIT ?,?";
         //String[] objs= {begin+"",size+""};
-        return JdbcTemplate.executeQuery(sql, new EmployeeMapper(), null);
+        return JdbcTemplate.executeQuery(sql, new EmployeeMapper(), new Object[]{});
     }
 
     @Override
@@ -94,7 +96,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         logger.debug("在EmployeeDaoImpl类中，addDept");
         String sql = "INSERT INTO t_employee(t_emp_no,t_emp_name, t_emp_dept, t_sex, t_education, t_phone, t_entry_time,t_create_time) " +
                 "VALUES (?,?,?,?,?,?,?,?)";//所有的占位符必须是英文的问号
-        String[] objects = {emp.getEmpNo(), emp.getEmpName(), emp.getEmpDept(), emp.getSex(), emp.getEducation(), emp.getPhone(), emp.getEntryTime() + "", emp.getEntryTime() + ""};
+        Object[] objects = {emp.getEmpNo(), emp.getEmpName(), emp.getDept().getDeptNo(), emp.getSex(), emp.getEducation(), emp.getPhone(), emp.getEntryTime() + "", emp.getEntryTime() + ""};
         try {
             count = JdbcTemplate.executeUpdate(sql, objects);
             logger.info("addEmployee执行insert返回结果是：" + count);
@@ -117,9 +119,12 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 "t_employee.t_email,\n" +
                 "t_employee.t_phone,\n" +
                 "t_employee.t_entry_time,\n" +
-                "t_employee.t_create_time\n" +
+                "t_employee.t_create_time,\n" +
+                "t_dept.t_dept_name AS d_dept_name\n" +
                 "FROM\n" +
-                "t_employee  where t_emp_no=? \n";
+                "t_employee\n" +
+                "LEFT JOIN t_dept ON t_dept.t_dept_no = t_employee.t_emp_dept \n" +
+                "where t_emp_no=? \n";
         Object[] objects = {empNo};
         List<Employee> lists = JdbcTemplate.executeQuery(sql, new EmployeeMapper(), objects);
         if (null != lists && lists.size() == 1) {
@@ -136,7 +141,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         logger.debug("在EmployeeDaoImpl类中，updateEmployee");
         String sql = "update t_employee set t_emp_name=?, t_emp_dept=?, t_sex=?, t_education=?, t_phone=?, t_entry_time=? " +
                 "where t_emp_no=?";//所有的占位符必须是英文的问号
-        String[] objects = {emp.getEmpName(), emp.getEmpDept(), emp.getSex(), emp.getEducation(), emp.getPhone(), emp.getEntryTime() + "", emp.getEmpNo()};
+        Object[] objects = {emp.getEmpName(), emp.getDept().getDeptNo(), emp.getSex(), emp.getEducation(), emp.getPhone(), emp.getEntryTime() + "", emp.getEmpNo()};
         try {
             count = JdbcTemplate.executeUpdate(sql, objects);
             logger.info("updateEmployee执行update返回结果是：" + count);
@@ -173,7 +178,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
         }
 
-        List<Employee> lists = JdbcTemplate.executeQuery(sql.toString(), new EmployeeMapper(), null);
+        List<Employee> lists = JdbcTemplate.executeQuery(sql.toString(), new EmployeeMapper(), new Object[]{});
        /* if(null!=lists && lists.size()==1){
             employeeResult = lists.get(0);
             return employeeResult;
@@ -187,7 +192,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
         int count = 0;
         logger.debug("在DeptDaoImpl类中，delete");
         String sql = "delete from t_employee where t_emp_no=?";//所有的占位符必须是英文的问号
-        String[] objects = {emp.getEmpNo()};
+        Object[] objects = {emp.getEmpNo()};
         try {
             count = JdbcTemplate.executeUpdate(sql, objects);
             logger.info("执行delete返回结果是：" + count);
@@ -231,7 +236,22 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
     @Override
     public List<Employee> queryByPage(String empName, String empDept, Integer currentPage, Integer pageSize) {
-        StringBuffer sql = new StringBuffer("select * from t_employee where 1=1 ");
+        StringBuffer sql = new StringBuffer("SELECT\n" +
+                "t_employee.id,\n" +
+                "t_employee.t_emp_no,\n" +
+                "t_employee.t_emp_name,\n" +
+                "t_employee.t_emp_dept,\n" +
+                "t_employee.t_sex,\n" +
+                "t_employee.t_education,\n" +
+                "t_employee.t_email,\n" +
+                "t_employee.t_phone,\n" +
+                "t_employee.t_entry_time,\n" +
+                "t_employee.t_create_time,\n" +
+                "t_dept.t_dept_name AS d_dept_name\n" +
+                "FROM\n" +
+                "t_employee\n" +
+                "LEFT JOIN t_dept ON t_dept.t_dept_no = t_employee.t_emp_dept\n" +
+                "where 1=1 ");
         if (!(empDept == null || "".equals(empDept))) {
             sql.append(" and t_emp_dept= " + "'" + empDept + "'");
         }

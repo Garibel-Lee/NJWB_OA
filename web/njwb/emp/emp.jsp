@@ -36,13 +36,13 @@
 </div>
 <div style="margin-top: 50px;width: 750px;margin-left: 50px;">
     <form action="emp/queryEmp.do" method="post">
-        姓名：<input type="text" id="empName" name="empName" style="width: 100px;height: 20px">
+        姓名：<input type="text" id="empName" name="empName" style="width: 100px;height: 20px"/>
         部门：
 
         <select id="empDept" name="empDept" style="width: 100px;height: 20px">
             <option value="">请选择</option>
         </select>
-        <input type="submit" value="查询" style="width: 50px;">
+        <input type="submit" value="查询" style="width: 50px;" />
     </form>
 </div>
 <table class="deptInfo">
@@ -63,7 +63,7 @@
         <tr>
             <td>${employee.empNo}</td>
             <td>${employee.empName}</td>
-            <td>${employee.empDept}</td>
+            <td>${employee.dept.deptName}</td>
             <td>${employee.sex}</td>
             <td>${employee.education}</td>
             <td>${employee.phone}</td>

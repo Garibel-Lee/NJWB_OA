@@ -44,20 +44,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<script type="text/javascript">
 		//动态获取角色名称
-		function getAllRoleName(){
+
+		$(document).ready(function () {
 			$.ajax({
-					type:"POST",
-  					url:"/role/getAllRole.do",
-  					success:function(msg){
-  						var roles = $.parseJSON(msg);
-  						var roleName = $("#roleName");
-  						for(var i = 0; i < roles.length;i++){
-  							var option = $("<option>"+roles[i].roleName+"</option>");
-  							roleName.append(option);
-  						}
-  					}
-				});
-		}
+				type: "POST",
+				url: "/permissions/getAllRoleName.do",
+				success: function (msg) {
+					var roles = $.parseJSON(msg);
+					var roleName = $("#roleId");
+					for (var i = 0; i < roles.length; i++) {
+						var option = $("<option value=" + roles[i].id + ">" + roles[i].roleName + "</option>");
+						roleName.append(option);
+					}
+				}
+			});
+			$.ajax({
+				type: "POST",
+				url: "emp/empGetall.do",
+				success: function (msg) {
+					var emps = $.parseJSON(msg);
+					var empNo = $("#empNo");
+					var empName=$("#empName");
+					for (var i = 0; i < emps.length; i++) {
+						var option1 = $("<option value=" + emps[i].empNo + ">" + emps[i].empName + "</option>");
+						empName.append(option1);
+						var option2 = $("<option value=" + emps[i].empNo + ">" + emps[i].empNo + "</option>");
+						empNo.append(option2);
+
+					}
+				}
+			});
+		});
+
+
+
 		function checkBeforeSubmit(){
 			var userAccount = $("#userAccount").val();
 			if(userAccount == ""){
@@ -89,11 +109,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				alert("请选择角色名");
 				return false;
 			}
+			if(empName!=empNo){
+				alert("请选择对应的员工编号与姓名");
+				return false;}
 			return true;
 		}
-		window.onload = function(){
-  			getAllRoleName();
-		}
+
 	</script>
   </head>
   
@@ -101,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div id="container">
 	  	<h3 class="title">添加账户</h3>
 	  </div>
-	  <form action="user/addUser.do" method="post" onsubmit="return checkBeforeSubmit()">
+	  <form action="/addUser.do" method="post" onsubmit="return checkBeforeSubmit()">
 	   	<table id = "Table">
 	   		<tr>
 	   			<td>
@@ -116,7 +137,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   			员工编码:
 	   			</td>
 	   			<td>
-	   				<input type = "text" name="empNo" id="empNo"/>
+
+					<select name="empNo" id="empNo" style="width: 100px">
+					</select>
+
+
+
 	   			</td>
 	   		</tr>  
 	   		<tr>
@@ -124,7 +150,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   			员工姓名:
 	   			</td>
 	   			<td>
-	   				<input type = "text" name="empName" id="empName"/>
+
+					<select name="empName" id="empName" style="width: 100px">
+					</select>
+
+
 	   			</td>
 	   		</tr>  
 			<tr>
@@ -133,9 +163,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   			</td>
 	   			<td>
 	   				<select name="userStatus" id="userStatus" style="width: 100px">
-		         		<option >请选择</option>
-		         		<option >正常</option>
-		         		<option >注销</option>
+		         		<option value="" >请选择</option>
+		         		<option value="1" >正常</option>
+		         		<option value="0" >锁定</option>
 	   				</select>
 	   			</td>
 	   		</tr>  
@@ -144,17 +174,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	   			角色:
 	   			</td>
 	   			<td>
-	   				<select name="roleName" id="roleName" style="width: 100px">
-		         		<option >请选择</option>
+	   				<select name="roleId" id="roleId" style="width: 100px">
+		         		<option value="">请选择</option>
 	   				</select>
 	   			</td>
 	   		</tr>  
 	   		
 	   		<tr>
 	   			<td colspan="2">
-	   				<input type = "submit" value="保存"/>
+	   				<input type = "submit" value="保存" />
 	   				<input type = "reset" value="重置"/>
-					<a href="/user/user.jsp " target="contentPage"><input type="button" value="返回"></a>
+					<a href="/queryUsers.do" target="contentPage"><input type="button" value="返回"/></a>
 	   			</td>
 	   		</tr>  	
 	   	</table>

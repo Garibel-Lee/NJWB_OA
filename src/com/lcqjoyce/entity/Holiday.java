@@ -52,6 +52,7 @@ public class Holiday {
         HolidayDao dao = new HolidayDaoImpl();
         List<Holiday> lists = new ArrayList<>();
         lists = dao.getAllHolidays();
+        System.out.println(lists.toString());
         Collections.sort(lists, new Comparator<Holiday>() {
             public int compare(Holiday o1, Holiday o2) {
                 // 升序

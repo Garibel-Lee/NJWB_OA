@@ -23,6 +23,10 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int insert(User user) throws SQLException {
+        String sql="INSERT INTO `njwb_oa`.`t_user`(`t_user_account`, `t_user_pwd`, `t_emp_no`, `t_role_id`, `t_create_time`, ) " +
+                "VALUES ( ?, ?, ?, 3,now())";
+
+
         return 0;
     }
 
@@ -33,12 +37,42 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int delete(User user) throws SQLException {
-        return 0;
+        int count = 0;
+        logger.debug("在DeptDaoImpl类中，delete");
+        String sql = "delete from t_user where t_id=?";//所有的占位符必须是英文的问号
+        Object[] objects = {user.getId()};
+        try {
+            count = JdbcTemplate.executeUpdate(sql, objects);
+            logger.info("执行delete返回结果是：" + count);
+        } catch (SQLException e) {
+            logger.error(count);
+        }
+        return count;
     }
 
     @Override
     public User getUserById(int id) {
-        return null;
+        User userResult = null;
+        logger.debug("在UserDaoImpl类中，调用login方法");
+        String sql = "SELECT\n" +
+                "t_user.t_id,\n" +
+                "t_user.t_user_account,\n" +
+                "t_user.t_user_pwd,\n" +
+                "t_user.t_emp_no,\n" +
+                "t_user.t_role_id,\n" +
+                "t_user.t_create_time,\n" +
+                "t_user.t_residueTimes\n" +
+
+                "FROM\n" +
+                "t_user\n" +
+                "WHERE\n" +
+                "t_user.t_id = ?";
+        Object[] objects = {id};
+        List<User> users = JdbcTemplate.executeQuery(sql, new UserMapper(), objects);
+        if (null != users && users.size() == 1) {
+            userResult = users.get(0);
+        }
+        return userResult;
     }
 
     @Override
@@ -130,7 +164,7 @@ public class UserDaoImpl implements UserDao {
         //limit 不支持占位符
         //String sql="select * from t_mood LIMIT ?,?";
         //String[] objs= {begin+"",size+""};
-        return JdbcTemplate.executeQuery(sql, new UserMapper(), null);
+        return JdbcTemplate.executeQuery(sql, new UserMapper(), new Object[]{});
     }
 
     @Override
@@ -205,5 +239,63 @@ public class UserDaoImpl implements UserDao {
         return JdbcTemplate.executeQuery(sql, new UserMapper(), roleId);
 
 
+    }
+
+    @Override
+    public User selectUserByIdAndPwd(Integer id, String encodeOldPwd) {
+        User userResult = null;
+        logger.debug("在UserDaoImpl类中，调用selectUserByIdAndPwd方法");
+        String sql = "SELECT\n" +
+                "t_user.t_id,\n" +
+                "t_user.t_user_account,\n" +
+                "t_user.t_residueTimes,\n" +
+                "t_user.t_user_pwd,\n" +
+                "t_user.t_emp_no,\n" +
+                "t_user.t_role_id,\n" +
+                "t_user.t_create_time\n" +
+                "FROM\n" +
+                "t_user\n" +
+                "WHERE\n" +
+                "t_user.t_id = ?  and  t_user_pwd=?";
+        Object[] objects = {id,encodeOldPwd};
+        List<User> users = JdbcTemplate.executeQuery(sql, new UserMapper(), objects);
+        if (null != users && users.size() == 1) {
+            userResult = users.get(0);
+        }
+        return userResult;
+    }
+
+    @Override
+    public int updateUserByPwd(Integer id, String encodeNewPwd) {
+            Object[] objects={encodeNewPwd , id};
+        String sql = " update t_user  set  t_user_pwd=? where t_id=? ";
+        int count = 0;
+        logger.debug("UserDaoImpl  updateUserByPwd");
+
+        try {
+            count = JdbcTemplate.executeUpdate(sql,objects);
+        } catch (Exception e) {
+            logger.error("更新密码结果："+count);
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
+    @Override
+    public int addUser(User user) {
+        int count = 0;
+        logger.info("在HolidayDaoImpl类中，addHoliday");
+        String sql = "INSERT INTO `njwb_oa`.`t_user`( `t_user_account`, `t_user_pwd`, `t_emp_no`, `t_role_id`, `t_create_time`, `t_residueTimes`)" +
+                " VALUES ( ?, ?, ?, ?, now(), ?);";//所有的占位符必须是英文的问号
+        logger.info(user.toString());
+        Object[] objects = {user.getUserAccount(), user.getUserPwd(), user.getEmpNo(), user.getRoleId(), user.getResidueTimes()};
+        try {
+            count = JdbcTemplate.executeUpdate(sql, objects);
+            logger.info("addholiday执行insert返回结果是：" + count);
+        } catch (SQLException e) {
+            logger.error(count);
+        }
+        return count;
     }
 }

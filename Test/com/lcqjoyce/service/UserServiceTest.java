@@ -2,6 +2,7 @@ package com.lcqjoyce.service;
 
 import com.lcqjoyce.My_JDBC.Init.BeanFactory;
 import com.lcqjoyce.entity.User;
+import com.lcqjoyce.util.MD5;
 import com.lcqjoyce.util.page.PageIndex;
 import com.lcqjoyce.util.page.PageResult;
 import org.junit.Test;
@@ -52,5 +53,9 @@ public class UserServiceTest {
         System.out.println(users.toString());
     }
 
+    @Test
+    public void MD5() {
+        System.out.println(MD5.encode("zhangsan"));
+    }
 
 }
